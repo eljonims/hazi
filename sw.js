@@ -9,16 +9,41 @@ const ASSETS = [
   './img/icons/hazi-512.png',
 ];
 
-// Instalación: Guardamos los archivos en la caché del navegador
-self.addEventListener('install', (e) => {
-  e.waitUntil(
-    caches.open(CACHE_NAME).then((cache) => cache.addAll(ASSETS))
+// Instalacion: Cache inicial de archivos criticos
+self.addEventListener('install', (event) => {
+  event.waitUntil(
+    caches.open(CACHE_NAME).then((cache) => {
+      return cache.addAll(ASSETS);
+    })
+  );
+  self.skipWaiting(); // Fuerza al SW nuevo a tomar el control
+});
+
+// Activacion: Limpieza de caches antiguas
+self.addEventListener('activate', (event) => {
+  event.waitUntil(
+    caches.keys().then((keys) => {
+      return Promise.all(
+        keys.filter(key => key !== CACHE_NAME).map(key => caches.delete(key))
+      );
+    })
   );
 });
 
-// Estrategia: Cache First (Si está en caché, no lo pidas a internet)
-self.addEventListener('fetch', (e) => {
-  e.respondWith(
-    caches.match(e.request).then((res) => res || fetch(e.request))
+// Estrategia: Stale-While-Revalidate
+self.addEventListener('fetch', (event) => {
+  event.respondWith(
+    caches.open(CACHE_NAME).then((cache) => {
+      return cache.match(event.request).then((cachedResponse) => {
+        const fetchedResponse = fetch(event.request).then((networkResponse) => {
+          // Actualizamos la cache con la version mas reciente de la red
+          cache.put(event.request, networkResponse.clone());
+          return networkResponse;
+        });
+
+        // Si esta en cache, lo devolvemos; si no, esperamos a la red
+        return cachedResponse || fetchedResponse;
+      });
+    })
   );
 });
