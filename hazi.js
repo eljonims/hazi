@@ -33,7 +33,7 @@ if ('serviceWorker' in navigator) {
                                 newWorker.addEventListener('statechange', () => {
                                         if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
                                                 // Lanzamos aviso visual al usuario
-                                                this.notificarActualizacion(reg);
+                                                window.appHazi.notificarActualizacion(reg);
                                         }
                                 });
                         });
