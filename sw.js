@@ -37,7 +37,9 @@ self.addEventListener('fetch', (event) => {
       return cache.match(event.request).then((cachedResponse) => {
         const fetchedResponse = fetch(event.request).then((networkResponse) => {
           // Actualizamos la cache con la version mas reciente de la red
-          cache.put(event.request, networkResponse.clone());
+          if (networkResponse.status === 200) {
+            cache.put(event.request, networkResponse.clone());
+          }
           return networkResponse;
         });
 
