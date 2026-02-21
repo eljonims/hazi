@@ -4,7 +4,7 @@ class Hazi {
 
                 };
         }
-        t(clave){
+        t(clave) {
                 return this.bla[clave] || clave;
         }
         lanzar() { }
@@ -25,7 +25,7 @@ class Hazi {
                         }
                 });
         }
-        notificarActualizacion(reg) { //será llamado desde el service worker respondiendo a su evento updatefound y statechange
+        notificarActualizacion(reg) {
                 const aviso = document.createElement('div');
                 aviso.className = 'aviso-actualizacion-neon';
                 aviso.innerHTML = ` <p>${"disponible-actualizar"}</p>
@@ -41,6 +41,18 @@ class Hazi {
                         // Recargamos la pagina para ver los cambios
                         window.location.reload();
                 });
+        }
+        bitacora(mensaje, porcentaje){
+                const display = document.getElementById('bitacora-display');
+                const barra = document.getElementById('bitacora-barra-interior');
+                if (display) {
+                        const linea = document.createElement('div');
+                        linea.className = 'bitacora-mensaje';
+                        linea.innerHTML = `<span class="bitacora-display-prompt">&gt;</span> ${mensaje}`;
+                        display.appendChild(linea);
+                        display.scrollTop = display.scrollHeight;
+                }
+                if (barra && porcentaje !== undefined) barra.style.width = `${porcentaje}%`;
         }
 }
 
