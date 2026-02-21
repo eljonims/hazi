@@ -42,7 +42,7 @@ class Hazi {
                         window.location.reload();
                 });
         }
-        bitacora(mensaje, porcentaje){
+        bitacora(mensaje, porcentaje) {
                 const display = document.getElementById('bitacora-display');
                 const barra = document.getElementById('bitacora-barra-interior');
                 if (display) {
@@ -54,6 +54,37 @@ class Hazi {
                 }
                 if (barra && porcentaje !== undefined) barra.style.width = `${porcentaje}%`;
         }
+        esperar(ms) { 
+                return new Promise(res => setTimeout(res, ms)); 
+        }
+        async iniciarApp(urlCatalogo) {
+                // 1. Iniciamos la bitácora con el nombre del motor
+                this.bitacora(`<b>Hazi</b>: ${this.t('Iniciando día')}`, 10);
+
+                try {
+                        this.bitacora("buscando a tu madre...", 30);
+                        await this.esperar(3000);
+                        this.bitacora("[OK] " + this.t('encontrada en la cocina.'), 45);
+                        await this.esperar(600);
+                         this.bitacora("bajándole las bragas...", 50);
+                        await this.esperar(2000);
+                        this.bitacora("[OK] " + this.t('se las bajó ella sola sin necesidad de ayuda.'), 60);
+                        await this.esperar(600);
+                         this.bitacora("poniéndola contra la mesa...", 65);
+                        await this.esperar(4000);
+                        this.bitacora("[OK] " + this.t('ella misma ha subido una pata'), 95);
+                        await this.esperar(1000);
+                        this.bitacora("fin de frungir. buscando cigarro", 100);
+                       
+                       
+
+                } catch (error) {
+                        // Si algo falla, el error también debería pasar por el traductor, si es posible
+                        this.bitacora(`${this.t('msg-error-critico')}: ${error.message || error}`, 100);
+                        console.error("Fallo LexiAprende:", error);
+                }
+        }
+
 }
 
 // --- REGISTRO DEL SERVICE WORKER (VIGILANTE) (PWA) ---
@@ -169,4 +200,4 @@ if ('serviceWorker' in navigator) {
 }
 
 window.appHazi = new Hazi();
-window.appHazi.lanzar();
+window.appHazi.iniciarApp();
