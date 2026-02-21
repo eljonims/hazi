@@ -37,6 +37,7 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    transition: opacity 0.6s ease;
 }
 
 .bitacora {
@@ -87,4 +88,25 @@
     text-align: left;
     border-radius: 4px;
 
+}
+
+.bitacora-mensaje {
+    margin-bottom: 5px;
+    border-left: 2px solid #00ffcc;
+    padding-left: 8px;
+    animation: aparecer 0.2s forwards;
+}
+.bitacora-display-prompt {
+    color:#00ffcc;
+}
+@keyframes aparecer {
+    from {
+        opacity: 0;
+        transform: translateY(5px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
