@@ -47,3 +47,10 @@ self.addEventListener('fetch', (event) => {
     })
   );
 });
+
+// Permite que el service worker tome el control cuando el usuario acepte actualización
+self.addEventListener('message', (event) => {
+  if (event.data === 'SKIP_WAITING') {
+    self.skipWaiting();
+  }
+});
