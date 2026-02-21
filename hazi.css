@@ -1,9 +1,10 @@
 .aviso-actualizacion-neon {
     position: fixed;
-    bottom: 20px; left: 50%;
+    bottom: 20px;
+    left: 50%;
     transform: translateX(-50%);
     background: #000;
-    color:antiquewhite;
+    color: antiquewhite;
     border: 2px solid #00ffcc;
     box-shadow: 0 0 20px #00ffcc;
     padding: 15px 25px;
@@ -20,4 +21,70 @@
     font-weight: bold;
     cursor: pointer;
     margin-top: 10px;
+}
+
+/* PANTALLA DE BITÁCORA*/
+
+.capa-bitacora {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #121212;
+    z-index: 9999;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.bitacora {
+    width: 85%;
+    max-width: 450px;
+    text-align: center;
+}
+
+.bitacora-icono {
+    width: 192px;
+    height: 192px;
+    object-fit: contain;
+    border-radius: 50%;
+}
+
+.bitacora-titulo {
+    font-family: serif;
+    font-size: 1.8rem;
+    margin-bottom: 20px;
+    color: #fff;
+    letter-spacing: 5px;
+}
+
+.bitacora-barra-exterior {
+    width: 100%;
+    height: 4px;
+    background: #2a2a2a;
+    border-radius: 2px;
+    margin-bottom: 15px;
+}
+
+.bitacora-barra-interior {
+    height: 100%;
+    background: #00ffcc;
+    box-shadow: 0 0 8px #00ffcc;
+    transition: width 0.3s;
+}
+
+.bitacora-display {
+    background: #000;
+    border: 1px solid #333;
+    height: 150px;
+    padding: 12px;
+    font-family: 'Consolas', monospace;
+    font-size: 0.8rem;
+    color: #aaa;
+    overflow-y: auto;
+    text-align: left;
+    border-radius: 4px;
+
 }
