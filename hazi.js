@@ -8,6 +8,23 @@ class Hazi {
                 return this.bla[clave] || clave;
         }
         lanzar() { }
+        vigilarEventos() {
+                document.addEventListener('click', (evento) => {//Delegación de eventos al click
+                        const objetivo = evento.target.closest('[data-accion]');
+                        if (!objetivo) return; // click sobre otra cosa distinta de un elemento de accion
+
+                        // Extraemos el data-accion e id (si la acción requiere discernir entre varios candidatos)
+                        const accion = objetivo.dataset.accion;
+                        const id = objetivo.dataset.id || null; // porsiaca
+
+                        // El Cerebro que decide según la acción
+                        switch (accion) {
+                                default:
+                                        console.warn(`data-accion="${accion}" no contemplado en la delegación`)
+
+                        }
+                });
+        }
         notificarActualizacion(reg) {
                 const aviso = document.createElement('div');
                 aviso.className = 'aviso-actualizacion-neon';
