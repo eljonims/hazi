@@ -1,6 +1,11 @@
 class Hazi {
         constructor() {
+                this.bla = { // traducciones al idioma base de textos de interfaz, mensajes ...
 
+                };
+        }
+        t(clave){
+                return this.bla[clave] || clave;
         }
         lanzar() { }
         notificarActualizacion(reg) {
