@@ -1,9 +1,12 @@
 class Hazi {
         constructor() {
                 this.bla = { // desvincula el texto literal en el html. se recupera con el método this.t(clave) 
-                        "critico-db" : "Error crítico: Almacén inaccesible.",
+                        'Iniciando-app' : "iniciando sistema.",
+                        'abriendo-bd' : "conectando con base de datos...",
+                        "critico-db" : "Error crítico: base de datos inaccesible.",
+                        "carga-finalizada" : "listo."
                 };
-                this.db = null;
+                this.bd = null;
         }
         t(clave) {
                 return this.bla[clave] || clave;
@@ -61,23 +64,27 @@ class Hazi {
         }
         async iniciarApp(urlCatalogo) {
                 // 1. Iniciamos la bitácora con el nombre del motor
-                this.bitacora(`<b>Hazi</b>: ${this.t('Iniciando día')}`, 10);
-
+                this.bitacora(`<b>Hazi</b>: ${this.t('Iniciando-app')}`, 10);
+                await this.esperar(500)
                 try {
-                        this.bitacora("vas tan alegre por la calle...", 30);
+                        // -A: tareas de inicio
+
+                        this.bitacora(`${this.t('abriendo-bd')}`, 30);
+                        await this.abrirBaseDatos();
                         await this.esperar(2000);
-                        this.bitacora("cuando...", 45);
-                        await this.esperar(600);
 
 
 
 
+                        // -B: llenado de barra y mensaje listo
 
-                        // -B: transición de desvanecimiento de la capa de carga hacia la app
+                        this.bitacora(`${this.t('carga-finalizada')}`, 100);
+                        await this.esperar(400);
+
+                        // -C: transición de desvanecimiento de la capa de carga hacia la app
 
                         const bitacora = document.getElementById('capa-bitacora');
-                        const app = document.getElementById('app');
-
+                        const app = document.getElementById('app');                        
 
                         const transicionar = (e) => {
                                 if (!bitacora.parentNode || !e.target === e.currentTarget) return;
@@ -113,21 +120,21 @@ class Hazi {
 
                         // Solo ocurre la primera vez: Definimos el diseño de los compartimentos
                         peticion.onupgradeneeded = (e) => {
-                                const db = e.target.result;
+                                const bd = e.target.result;
 
-                                if (!db.objectStoreNames.contains("records")) {
-                                        db.createObjectStore("records", { keyPath: "id" });
+                                if (!bd.objectStoreNames.contains("records")) {
+                                        bd.createObjectStore("records", { keyPath: "id" });
                                 }
-                                if (!db.objectStoreNames.contains("lexico")) {
-                                        db.createObjectStore("lexico", { keyPath: "id" });
+                                if (!bd.objectStoreNames.contains("lexico")) {
+                                        bd.createObjectStore("lexico", { keyPath: "id" });
                                 }
-                                if (!db.objectStoreNames.contains("ajustes")) {
-                                        db.createObjectStore("ajustes", { keyPath: "id" });
+                                if (!bd.objectStoreNames.contains("ajustes")) {
+                                        bd.createObjectStore("ajustes", { keyPath: "id" });
                                 }
                         };
 
                         peticion.onsuccess = (e) => {
-                                this.db = e.target.result;
+                                this.bd = e.target.result;
                                 resolver();
                         };
 
