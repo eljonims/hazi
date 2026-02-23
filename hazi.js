@@ -1,8 +1,9 @@
 class Hazi {
         constructor() {
                 this.bla = { // desvincula el texto literal en el html. se recupera con el método this.t(clave) 
-
+                        "critico-db" : "Error crítico: Almacén inaccesible.",
                 };
+                this.db = null;
         }
         t(clave) {
                 return this.bla[clave] || clave;
@@ -67,7 +68,7 @@ class Hazi {
                         await this.esperar(2000);
                         this.bitacora("cuando...", 45);
                         await this.esperar(600);
-                      
+
 
 
 
@@ -77,7 +78,7 @@ class Hazi {
                         const bitacora = document.getElementById('capa-bitacora');
                         const app = document.getElementById('app');
 
-                        
+
                         const transicionar = (e) => {
                                 if (!bitacora.parentNode || !e.target === e.currentTarget) return;
                                 bitacora.remove();
@@ -104,6 +105,34 @@ class Hazi {
                         this.bitacora(`${this.t('msg-error-critico')}: ${error.message || error}`, 100);
                         console.error("Fallo LexiAprende:", error);
                 }
+        }
+        abrirBaseDatos() {
+                return new Promise((resolver, rechazar) => {
+                        // Abrimos la base de datos (Versión 1)
+                        const peticion = indexedDB.open("hazi_DB", 1);
+
+                        // Solo ocurre la primera vez: Definimos el diseño de los compartimentos
+                        peticion.onupgradeneeded = (e) => {
+                                const db = e.target.result;
+
+                                if (!db.objectStoreNames.contains("records")) {
+                                        db.createObjectStore("records", { keyPath: "id" });
+                                }
+                                if (!db.objectStoreNames.contains("lexico")) {
+                                        db.createObjectStore("lexico", { keyPath: "id" });
+                                }
+                                if (!db.objectStoreNames.contains("ajustes")) {
+                                        db.createObjectStore("ajustes", { keyPath: "id" });
+                                }
+                        };
+
+                        peticion.onsuccess = (e) => {
+                                this.db = e.target.result;
+                                resolver();
+                        };
+
+                        peticion.onerror = () => rechazar(`${this.t("critico-bd")}`);
+                });
         }
 
 }
