@@ -8,7 +8,7 @@ class Hazi {
                 return this.bla[clave] || clave;
         }
         lanzar() { }
-        vigilarEventos() {
+        establecerEventos() {
                 document.addEventListener('click', (evento) => {//Delegación de eventos al click
                         const objetivo = evento.target.closest('[data-accion]');
                         if (!objetivo) return; // click sobre otra cosa distinta de un elemento de accion
@@ -24,6 +24,7 @@ class Hazi {
 
                         }
                 });
+
         }
         notificarActualizacion(reg) {
                 const aviso = document.createElement('div');
@@ -54,29 +55,49 @@ class Hazi {
                 }
                 if (barra && porcentaje !== undefined) barra.style.width = `${porcentaje}%`;
         }
-        esperar(ms) { 
-                return new Promise(res => setTimeout(res, ms)); 
+        esperar(ms) {
+                return new Promise(res => setTimeout(res, ms));
         }
         async iniciarApp(urlCatalogo) {
                 // 1. Iniciamos la bitácora con el nombre del motor
                 this.bitacora(`<b>Hazi</b>: ${this.t('Iniciando día')}`, 10);
 
                 try {
-                        this.bitacora("buscando a tu madre...", 30);
-                        await this.esperar(3000);
-                        this.bitacora("[OK] " + this.t('encontrada en la cocina.'), 45);
-                        await this.esperar(600);
-                         this.bitacora("bajándole las bragas...", 50);
+                        this.bitacora("vas tan alegre por la calle...", 30);
                         await this.esperar(2000);
-                        this.bitacora("[OK] " + this.t('se las bajó ella sola sin necesidad de ayuda.'), 60);
+                        this.bitacora("cuando...", 45);
                         await this.esperar(600);
-                         this.bitacora("poniéndola contra la mesa...", 65);
-                        await this.esperar(4000);
-                        this.bitacora("[OK] " + this.t('ella misma ha subido una pata'), 95);
-                        await this.esperar(1000);
-                        this.bitacora("fin de frungir. buscando cigarro", 100);
-                       
-                       
+                      
+
+
+
+
+                        // -B: transición de desvanecimiento de la capa de carga hacia la app
+
+                        const bitacora = document.getElementById('capa-bitacora');
+                        const app = document.getElementById('app');
+
+                        
+                        const transicionar = (e) => {
+                                if (!bitacora.parentNode || !e.target === e.currentTarget) return;
+                                bitacora.remove();
+                                app.classList.remove('oculto');
+                                this.establecerEventos();
+
+                        };
+                        bitacora.addEventListener('transitionend', transicionar, { once: true });
+                        bitacora.style.opacity = 0; //dispara la transición
+
+                        const tiempoMaximoDeTransicion = () => {
+                                const estilos = window.getComputedStyle(bitacora);
+                                const duraciones = estilos.transitionDuration.split(',').map(s => parseFloat(s) * 1000);
+                                const delays = estilos.transitionDelay.split(',').map(s => parseFloat(s) * 1000);
+                                const tiemposTotales = duraciones.map((dur, i) => dur + (delays[i] || 0));
+
+                                return Math.max(...tiemposTotales);
+                        };
+                        setTimeout(transicionar, tiempoMaximoDeTransicion() + 100); //seguro por si el css no tiene transición
+
 
                 } catch (error) {
                         // Si algo falla, el error también debería pasar por el traductor, si es posible

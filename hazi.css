@@ -1,3 +1,8 @@
+.oculto {
+        display: none !important;
+}
+
+
 .aviso-actualizacion-neon {
     position: fixed;
     bottom: 20px;
