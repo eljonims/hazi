@@ -1,10 +1,13 @@
 class Hazi {
         constructor() {
                 this.bla = { // desvincula el texto literal en el html. se recupera con el método this.t(clave) 
-                        'Iniciando-app' : "iniciando sistema.",
-                        'abriendo-bd' : "conectando con base de datos...",
-                        "critico-db" : "Error crítico: base de datos inaccesible.",
-                        "carga-finalizada" : "listo."
+                        'Iniciando-app': "iniciando sistema.",
+                        'abriendo-bd': "conectando con base de datos",
+                        'critico': 'Error crítico',
+                        "error-db": "base de datos inaccesible.",
+                        'descargando-catalogo': "descargando catálogo de categorías",
+                        'error-catalogo': 'catálogo no encontrado ',
+                        "carga-finalizada": "listo."
                 };
                 this.bd = null;
         }
@@ -69,11 +72,15 @@ class Hazi {
                 try {
                         // -A: tareas de inicio
 
-                        this.bitacora(`${this.t('abriendo-bd')}`, 30);
+                        this.bitacora(`${this.t('abriendo-bd')} ...`, 30);
                         await this.abrirBaseDatos();
                         await this.esperar(2000);
 
 
+                        this.bitacora(`${this.t('descargando-catalogo')} ...`, 50);
+                        const [respuesta] = await Promise.all( [fetch(urlCatalogo),  this.esperar(1500)]);
+                        if (!respuesta.ok) throw new Error(`${this.t('critico')}: ${this.t('error-catalogo')}`);
+                        const catalogo = await respuesta.json();
 
 
                         // -B: llenado de barra y mensaje listo
@@ -84,13 +91,14 @@ class Hazi {
                         // -C: transición de desvanecimiento de la capa de carga hacia la app
 
                         const bitacora = document.getElementById('capa-bitacora');
-                        const app = document.getElementById('app');                        
+                        const app = document.getElementById('app');
 
                         const transicionar = (e) => {
                                 if (!bitacora.parentNode || !e.target === e.currentTarget) return;
                                 bitacora.remove();
                                 app.classList.remove('oculto');
                                 this.establecerEventos();
+                                this.mostrarConfiguracionPartida(catalogo);
 
                         };
                         bitacora.addEventListener('transitionend', transicionar, { once: true });
@@ -108,9 +116,7 @@ class Hazi {
 
 
                 } catch (error) {
-                        // Si algo falla, el error también debería pasar por el traductor, si es posible
-                        this.bitacora(`${this.t('msg-error-critico')}: ${error.message || error}`, 100);
-                        console.error("Fallo LexiAprende:", error);
+                        this.bitacora(`${this.t('critico')}: ${error.message || error}`, 100);
                 }
         }
         abrirBaseDatos() {
@@ -138,8 +144,11 @@ class Hazi {
                                 resolver();
                         };
 
-                        peticion.onerror = () => rechazar(`${this.t("critico-bd")}`);
+                        peticion.onerror = () => rechazar(`${this.t('critico')}: ${this.t("error-bd")}`);
                 });
+        }
+        mostrarConfiguracionPartida(catalogo){
+                document.getElementById('app').innerHTML = JSON.stringify(catalogo);
         }
 
 }
@@ -257,4 +266,4 @@ if ('serviceWorker' in navigator) {
 }
 
 window.appHazi = new Hazi();
-window.appHazi.iniciarApp();
+window.appHazi.iniciarApp("./datos/catalogo.json");
