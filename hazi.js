@@ -7,9 +7,15 @@ class Hazi {
                         "error-db": "base de datos inaccesible.",
                         'descargando-catalogo': "descargando catálogo de categorías",
                         'error-catalogo': 'catálogo no encontrado ',
-                        "carga-finalizada": "listo."
+                        "carga-finalizada": "listo.",
+                        'btn-iniciar-partida': "Iniciar partida",
+                        'nvl-1' : 'Básico',
+                        "nvl-2" : "Medio",
+                        "nvl-3" : 'Experto',
+                        'btn-comenzar': 'comenzar',
                 };
                 this.bd = null;
+                this.temasActivos = [];
         }
         t(clave) {
                 return this.bla[clave] || clave;
@@ -17,17 +23,17 @@ class Hazi {
         lanzar() { }
         establecerEventos() {
                 document.addEventListener('click', (evento) => {//Delegación de eventos al click
-                        const objetivo = evento.target.closest('[data-accion]');
+                        const objetivo = evento.target.closest('[data-action]');
                         if (!objetivo) return; // click sobre otra cosa distinta de un elemento de accion
 
-                        // Extraemos el data-accion e id (si la acción requiere discernir entre varios candidatos)
-                        const accion = objetivo.dataset.accion;
+                        // Extraemos el data-action e id (si la acción requiere discernir entre varios candidatos)
+                        const action = objetivo.dataset.action;
                         const id = objetivo.dataset.id || null; // porsiaca
 
                         // El Cerebro que decide según la acción
-                        switch (accion) {
+                        switch (action) {
                                 default:
-                                        console.warn(`data-accion="${accion}" no contemplado en la delegación`)
+                                        console.warn(`data-action="${action}" no contemplado en la delegación`)
 
                         }
                 });
@@ -91,12 +97,12 @@ class Hazi {
                         // -C: transición de desvanecimiento de la capa de carga hacia la app
 
                         const bitacora = document.getElementById('capa-bitacora');
-                        const app = document.getElementById('app');
+                        const principal = document.getElementById('capa-principal');
 
                         const transicionar = (e) => {
                                 if (!bitacora.parentNode || !e.target === e.currentTarget) return;
                                 bitacora.remove();
-                                app.classList.remove('oculto');
+                                principal.classList.remove('oculto');
                                 this.establecerEventos();
                                 this.mostrarConfiguracionPartida(catalogo);
 
@@ -148,7 +154,42 @@ class Hazi {
                 });
         }
         mostrarConfiguracionPartida(catalogo){
-                document.getElementById('app').innerHTML = JSON.stringify(catalogo);
+                const cuerpo = document.getElementById('capa-principal');
+                cuerpo.innerHTML = "";
+                const titulo = '<div class="titulo-app">Hazi</div>';
+                const menu = '<div class="menu" data-action="abrir-menu">☰</div>'
+                const comenzar = `<button class="comenzar" data-action="comenzar-partida">${this.t('btn-comenzar')}</button>`;
+                const dificultades = `
+                        <div class="dificultad">
+                                <button class="nivel seleccionado" data-action="cambiar-dificultad" data-id="1">
+                                        <span class="icono">🌱</span>
+                                        <span class="texto">${this.t('nvl-1')}</span>
+                                </button>
+                                <button class="nivel" data-action="cambiar-dificultad" data-id="2">
+                                        <span class="icono">🌿</span>
+                                        <span class="texto">${this.t('nvl-2')}</span>
+                                </button>
+                                <button class="nivel" data-action="cambiar-dificultad" data-id="3">
+                                        <span class="icono">🌳</span>
+                                        <span class="texto">${this.t('nvl-3')}</span>
+                                </button>
+                        </div>
+                `;
+
+                let temario = '<div class="temario">';
+                this.temasActivos = [];
+                catalogo.forEach( tema => {
+                        temario += `
+                        <div    class="tema marcado"  data-action="seleccionar-tema" data-id="${tema.id}">
+                                <span class="titulo">${tema.titulo}</span>
+                                <span class="icono">🌱</span>
+                        </div>`;
+                        this.temasActivos.push(tema.id);
+                });
+                temario += '</div>';
+                cuerpo.innerHTML = titulo + menu + temario + dificultades + comenzar;
+
+
         }
 
 }
