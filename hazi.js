@@ -16,6 +16,7 @@ class Hazi {
                 };
                 this.bd = null;
                 this.temasActivos = [];
+                this.nivel = 1;
         }
         t(clave) {
                 return this.bla[clave] || clave;
@@ -23,21 +24,31 @@ class Hazi {
         lanzar() { }
         establecerEventos() {
                 document.addEventListener('click', (evento) => {//Delegación de eventos al click
-                        const objetivo = evento.target.closest('[data-action]');
-                        if (!objetivo) return; // click sobre otra cosa distinta de un elemento de accion
+                        const target = evento.target.closest('[data-action]');
+                        if (!target) return; // click sobre otra cosa distinta de un elemento de accion
 
                         // Extraemos el data-action e id (si la acción requiere discernir entre varios candidatos)
-                        const action = objetivo.dataset.action;
-                        const id = objetivo.dataset.id || null; // porsiaca
+                        const action = target.dataset.action;
+                        const id = target.dataset.id || null; // porsiaca
 
                         // El Cerebro que decide según la acción
                         switch (action) {
+                                case "cambiar-dificultad":{
+                                        this.cambiarDificultad(target, Number(id));
+                                        break;
+                                }
+
                                 default:
                                         console.warn(`data-action="${action}" no contemplado en la delegación`)
 
                         }
                 });
 
+        }
+        cambiarDificultad( elemento, nivel){
+                this.nivel = nivel; // "1", "2", o "3"
+                document.querySelector('.nivel.seleccionado')?.classList.remove('seleccionado');
+                elemento.classList.add('seleccionado');
         }
         notificarActualizacion(reg) {
                 const aviso = document.createElement('div');
