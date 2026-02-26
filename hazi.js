@@ -15,7 +15,7 @@ class Hazi {
                         'btn-comenzar': 'comenzar',
                 };
                 this.bd = null;
-                this.temasActivos = [];
+                this.temas = new Set();
                 this.nivel = 1;
         }
         t(clave) {
@@ -37,6 +37,10 @@ class Hazi {
                                         this.cambiarDificultad(target, Number(id));
                                         break;
                                 }
+                                case "seleccionar-tema":{
+                                        this.seleccionarTema(target, id);
+                                        break;
+                                }
 
                                 default:
                                         console.warn(`data-action="${action}" no contemplado en la delegación`)
@@ -49,6 +53,10 @@ class Hazi {
                 this.nivel = nivel; // "1", "2", o "3"
                 document.querySelector('.nivel.seleccionado')?.classList.remove('seleccionado');
                 elemento.classList.add('seleccionado');
+        }
+        seleccionarTema( elemento, t){
+                elemento.classList.toggle('seleccionado');
+                this.temas.has(t) ? this.temas.delete(t) : this.temas.add(t);
         }
         notificarActualizacion(reg) {
                 const aviso = document.createElement('div');
@@ -165,6 +173,10 @@ class Hazi {
                 });
         }
         mostrarConfiguracionPartida(catalogo){
+
+                this.temas.clear();
+                this.nivel = 1;
+
                 const cuerpo = document.getElementById('capa-principal');
                 cuerpo.innerHTML = "";
                 const titulo = '<div class="titulo-app">Hazi</div>';
@@ -172,15 +184,15 @@ class Hazi {
                 const comenzar = `<button class="comenzar" data-action="comenzar-partida">${this.t('btn-comenzar')}</button>`;
                 const dificultades = `
                         <div class="dificultad">
-                                <button class="nivel seleccionado" data-action="cambiar-dificultad" data-id="1">
+                                <button class="nivel ${this.nivel == 1?"seleccionado":""}" data-action="cambiar-dificultad" data-id="1">
                                         <span class="icono">🌱</span>
                                         <span class="texto">${this.t('nvl-1')}</span>
                                 </button>
-                                <button class="nivel" data-action="cambiar-dificultad" data-id="2">
+                                <button class="nivel ${this.nivel == 2?"seleccionado":""}" data-action="cambiar-dificultad" data-id="2">
                                         <span class="icono">🌿</span>
                                         <span class="texto">${this.t('nvl-2')}</span>
                                 </button>
-                                <button class="nivel" data-action="cambiar-dificultad" data-id="3">
+                                <button class="nivel ${this.nivel == 3?"seleccionado":""}" data-action="cambiar-dificultad" data-id="3">
                                         <span class="icono">🌳</span>
                                         <span class="texto">${this.t('nvl-3')}</span>
                                 </button>
@@ -188,14 +200,13 @@ class Hazi {
                 `;
 
                 let temario = '<div class="temario">';
-                this.temasActivos = [];
                 catalogo.forEach( tema => {
                         temario += `
-                        <div    class="tema marcado"  data-action="seleccionar-tema" data-id="${tema.id}">
+                        <div    class="tema seleccionado"  data-action="seleccionar-tema" data-id="${tema.id}">
                                 <span class="titulo">${tema.titulo}</span>
                                 <span class="icono">🌱</span>
                         </div>`;
-                        this.temasActivos.push(tema.id);
+                        this.temas.add(tema.id);
                 });
                 temario += '</div>';
                 cuerpo.innerHTML = titulo + menu + temario + dificultades + comenzar;
