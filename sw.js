@@ -1,4 +1,4 @@
-const CACHE_NAME = 'hazi-v1';
+const CACHE_NAME = 'hazi-v2';
 const ASSETS = [
   './',
   './index.html',
