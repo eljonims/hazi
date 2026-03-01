@@ -24,6 +24,32 @@ body {
     display: none !important;
 }
 
+#aviso-horizontal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100dvw;
+    height: 100dvh;
+    background: #2c3e50;
+    color: white;
+    z-index: 10000;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+@media screen and (max-width: 900px) and (orientation: landscape) {
+    #aviso-horizontal {
+        display: flex;
+    }
+
+    #capa-principal {
+        display: none;
+        /* Ocultamos el juego para que no distraiga */
+    }
+}
 
 .aviso-actualizacion-neon {
     position: fixed;
@@ -146,15 +172,27 @@ body {
     margin: 0;
     padding: 0;
     display: grid;
-    gap: 5px;
     min-height: 100dvh;
     max-height: 100dvh;
     min-width: 100dvw;
     max-width: 100dvh;
-    user-select: none; 
+    user-select: none;
+    grid-template-rows: repeat(10,minmax(0, 1fr));
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+    grid-template-areas:
+        "titulo titulo . . . menu"
+        "temas temas temas temas temas temas"
+        "temas temas temas temas temas temas"
+        "temas temas temas temas temas temas"
+        "temas temas temas temas temas temas"
+        "temas temas temas temas temas temas"
+        "temas temas temas temas temas temas"
+        ". . . . . ."
+        "dificultad dificultad dificultad dificultad dificultad dificultad"
+        "comenzar comenzar comenzar comenzar comenzar comenzar";
 }
 
-@media (hover: hover) {
+@media screen and (hover: hover) and (pointer: fine) {
 
     /* pantallas de ordenador */
     #capa-principal {
@@ -166,41 +204,7 @@ body {
     }
 }
 
-@media (orientation: portrait) {
-    #capa-principal {
-        grid-template-rows: minmax(0, 1fr) minmax(0, 6fr) minmax(0, 1fr) minmax(0, 1fr) minmax(0, 1fr);
-        grid-template-columns: repeat(6, minmax(0, 1fr));
-        grid-template-areas:
-            "titulo titulo . . . menu"
-            "temas temas temas temas temas temas"
-            ". . . . . ."
-            "dificultad dificultad dificultad dificultad dificultad dificultad"
-            "comenzar comenzar comenzar comenzar comenzar comenzar";
-    }
 
-    #capa-principal .dificultad {
-        flex-direction: row;
-
-    }
-}
-
-@media (orientation: landscape) {
-    #capa-principal {
-        grid-template-rows: minmax(0, 1fr) minmax(0, 1fr) minmax(0, 6fr) minmax(0, 1fr) minmax(0, 1fr);
-        grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) minmax(0, 6fr) minmax(0, 1fr) minmax(0, 1fr);
-        grid-template-areas:
-            "titulo titulo .  . menu"
-            ". . temas  . ."
-            ". . temas  dificultad dificultad"
-            ". . temas comenzar comenzar"
-            ". . temas comenzar  comenzar";
-    }
-
-    #capa-principal .dificultad {
-        flex-direction: column;
-
-    }
-}
 
 #capa-principal>.titulo-app {
     grid-area: titulo;
@@ -209,7 +213,7 @@ body {
     font-size: 1.8rem;
     margin-bottom: 20px;
     color: #fff;
-    display:flex;
+    display: flex;
     justify-content: center;
     align-items: center;
 }
@@ -250,7 +254,7 @@ body {
     text-transform: uppercase;
     cursor: pointer;
     box-shadow: 0 0 10px #00ffcc;
-    white-space: nowrap; 
+    white-space: nowrap;
 }
 
 #capa-principal .dificultad {
@@ -260,6 +264,7 @@ body {
     align-items: stretch;
     justify-content: space-evenly;
     min-height: 0;
+    flex-direction: row;
 
 }
 
