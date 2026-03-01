@@ -16,6 +16,7 @@ class Hazi {
                 };
                 this.bd = null;
                 this.temas = new Set();
+                this.vocabulario = [];
                 this.nivel = 1;
         }
         t(clave) {
@@ -39,6 +40,10 @@ class Hazi {
                                 }
                                 case "seleccionar-tema":{
                                         this.seleccionarTema(target, id);
+                                        break;
+                                }
+                                case "comenzar-partida":{
+                                        this.comenzarPartida();
                                         break;
                                 }
 
@@ -213,6 +218,24 @@ class Hazi {
 
 
         }
+        async descargarTemas(){
+                try{
+                        const promesas = [...this.temas].map(id=>{
+                                return fetch(`datos/temas/${id}.json`).then(res=>{
+                                        if(!res.ok) throw new Error(`No existe el archivo: ./datos/temas/${id}.json`);
+                                        return res.json();
+                                });
+                        });
+                        const lista = await Promise.all(promesas);
+                        this.vocabulario = [];
+                        lista.forEach(json=>{
+                                this.vocabulario.push(...json.vocabulario);// reune todo el vocabulario seleccionado
+                        });
+                } catch (error){
+
+                }
+        }
+
 
 }
 
