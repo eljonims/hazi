@@ -34,7 +34,7 @@
       "ref": "",
       "r": 1,
       "def": "mano",
-      "img": [],
+      "img": ["0/0c/Main5.png"],
       "snd": [],
       "e": [
         "iz.",
@@ -47,7 +47,7 @@
       "ref": "",
       "r": 1,
       "def": "pie",
-      "img": [],
+      "img": ["d/d3/Python-Foot.png"],
       "snd": [],
       "e": [
         "iz.",
@@ -60,7 +60,7 @@
       "ref": "",
       "r": 1,
       "def": "ojo",
-      "img": [],
+      "img": ["6/63/Visual_system_-_Eye_3_--_Smart-Servier.png"],
       "snd": [],
       "e": [
         "iz.",
@@ -73,7 +73,7 @@
       "ref": "",
       "r": 1,
       "def": "boca",
-      "img": [],
+      "img": ["2/25/Ventre_de_língua.png"],
       "snd": [],
       "e": [
         "iz.",
@@ -1858,7 +1858,7 @@
       "ref": "",
       "r": 2,
       "def": "pulgar",
-      "img": [],
+      "img": ["f/fc/Pouce.png"],
       "snd": [],
       "e": [
         "iz.",
@@ -1871,7 +1871,7 @@
       "ref": "hatz lodia",
       "r": 2,
       "def": "pulgar",
-      "img": [],
+      "img": ["f/fc/Pouce.png"],
       "snd": [],
       "e": [
         "iz.",
@@ -1884,7 +1884,7 @@
       "ref": "",
       "r": 2,
       "def": "índice",
-      "img": [],
+      "img": ["f/f3/Index5.png"],
       "snd": [],
       "e": [
         "iz.",
@@ -1897,7 +1897,7 @@
       "ref": "erakusle",
       "r": 2,
       "def": "índice",
-      "img": [],
+      "img": ["f/f3/Index5.png"],
       "snd": [],
       "e": [
         "iz.",
@@ -1910,7 +1910,7 @@
       "ref": "",
       "r": 2,
       "def": "dedo corazón / medio",
-      "img": [],
+      "img": ["0/0d/Majeur5.png"],
       "snd": [],
       "e": [
         "iz.",
@@ -1923,7 +1923,7 @@
       "ref": "erdiko hatz",
       "r": 2,
       "def": "dedo corazón",
-      "img": [],
+      "img": ["0/0d/Majeur5.png"],
       "snd": [],
       "e": [
         "iz.",
@@ -1949,7 +1949,7 @@
       "ref": "",
       "r": 2,
       "def": "meñique",
-      "img": [],
+      "img": ["0/07/Auriculaire5.png"],
       "snd": [],
       "e": [
         "iz.",
@@ -1962,7 +1962,7 @@
       "ref": "hatz txiki",
       "r": 2,
       "def": "meñique",
-      "img": [],
+      "img": ["0/07/Auriculaire5.png"],
       "snd": [],
       "e": [
         "iz.",

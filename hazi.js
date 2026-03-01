@@ -18,6 +18,8 @@ class Hazi {
                 this.temas = new Set();
                 this.vocabulario = [];
                 this.nivel = 1;
+                this.modoPregunta = "img-txt-audio";
+                this.modoRespuesta = "txt";
         }
         t(clave) {
                 return this.bla[clave] || clave;
@@ -250,6 +252,11 @@ class Hazi {
                 // 4. Construcción de la URL de miniatura (Thumbnail)
                 // Estructura: base + ruta/del/hash + / + ancho + px- + nombre_para_miniatura
                 return `${baseUrl}${imgPath}/${width}px-${thumbName}`;
+        }
+        crearElementoImg(item, width = 300){
+                const aleatorio = Math.floor(Math.ramdom() * item.img.length);
+                const url = this.crearUrlDeImagenWiki(item.img[aleatorio], width);
+                return ` <img src="${url}" alt="${item.k}" loading="eager" title="${item.k}">`;
         }
 
 
