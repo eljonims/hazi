@@ -9,9 +9,9 @@ class Hazi {
                         'error-catalogo': 'catálogo no encontrado ',
                         "carga-finalizada": "listo.",
                         'btn-iniciar-partida': "Iniciar partida",
-                        'nvl-1' : 'Básico',
-                        "nvl-2" : "Medio",
-                        "nvl-3" : 'Experto',
+                        'nvl-1': 'Básico',
+                        "nvl-2": "Medio",
+                        "nvl-3": 'Experto',
                         'btn-comenzar': 'comenzar',
                 };
                 this.bd = null;
@@ -34,15 +34,15 @@ class Hazi {
 
                         // El Cerebro que decide según la acción
                         switch (action) {
-                                case "cambiar-dificultad":{
+                                case "cambiar-dificultad": {
                                         this.cambiarDificultad(target, Number(id));
                                         break;
                                 }
-                                case "seleccionar-tema":{
+                                case "seleccionar-tema": {
                                         this.seleccionarTema(target, id);
                                         break;
                                 }
-                                case "comenzar-partida":{
+                                case "comenzar-partida": {
                                         this.comenzarPartida();
                                         break;
                                 }
@@ -54,12 +54,12 @@ class Hazi {
                 });
 
         }
-        cambiarDificultad( elemento, nivel){
+        cambiarDificultad(elemento, nivel) {
                 this.nivel = nivel; // "1", "2", o "3"
                 document.querySelector('.nivel.seleccionado')?.classList.remove('seleccionado');
                 elemento.classList.add('seleccionado');
         }
-        seleccionarTema( elemento, t){
+        seleccionarTema(elemento, t) {
                 elemento.classList.toggle('seleccionado');
                 this.temas.has(t) ? this.temas.delete(t) : this.temas.add(t);
         }
@@ -108,7 +108,7 @@ class Hazi {
 
 
                         this.bitacora(`${this.t('descargando-catalogo')} ...`, 50);
-                        const [respuesta] = await Promise.all( [fetch(urlCatalogo),  this.esperar(1500)]);
+                        const [respuesta] = await Promise.all([fetch(urlCatalogo), this.esperar(1500)]);
                         if (!respuesta.ok) throw new Error(`${this.t('critico')}: ${this.t('error-catalogo')}`);
                         const catalogo = await respuesta.json();
 
@@ -177,7 +177,7 @@ class Hazi {
                         peticion.onerror = () => rechazar(`${this.t('critico')}: ${this.t("error-bd")}`);
                 });
         }
-        mostrarConfiguracionPartida(catalogo){
+        mostrarConfiguracionPartida(catalogo) {
 
                 this.temas.clear();
                 this.nivel = 1;
@@ -189,15 +189,15 @@ class Hazi {
                 const comenzar = `<button class="comenzar" data-action="comenzar-partida">${this.t('btn-comenzar')}</button>`;
                 const dificultades = `
                         <div class="dificultad">
-                                <button class="nivel ${this.nivel == 1?"seleccionado":""}" data-action="cambiar-dificultad" data-id="1">
+                                <button class="nivel ${this.nivel == 1 ? "seleccionado" : ""}" data-action="cambiar-dificultad" data-id="1">
                                         <span class="icono">🌱</span>
                                         <span class="texto">${this.t('nvl-1')}</span>
                                 </button>
-                                <button class="nivel ${this.nivel == 2?"seleccionado":""}" data-action="cambiar-dificultad" data-id="2">
+                                <button class="nivel ${this.nivel == 2 ? "seleccionado" : ""}" data-action="cambiar-dificultad" data-id="2">
                                         <span class="icono">🌿</span>
                                         <span class="texto">${this.t('nvl-2')}</span>
                                 </button>
-                                <button class="nivel ${this.nivel == 3?"seleccionado":""}" data-action="cambiar-dificultad" data-id="3">
+                                <button class="nivel ${this.nivel == 3 ? "seleccionado" : ""}" data-action="cambiar-dificultad" data-id="3">
                                         <span class="icono">🌳</span>
                                         <span class="texto">${this.t('nvl-3')}</span>
                                 </button>
@@ -205,7 +205,7 @@ class Hazi {
                 `;
 
                 let temario = '<div class="temario">';
-                catalogo.forEach( tema => {
+                catalogo.forEach(tema => {
                         temario += `
                         <div    class="tema seleccionado"  data-action="seleccionar-tema" data-id="${tema.id}">
                                 <span class="titulo">${tema.titulo}</span>
@@ -218,22 +218,38 @@ class Hazi {
 
 
         }
-        async descargarTemas(){
-                try{
-                        const promesas = [...this.temas].map(id=>{
-                                return fetch(`datos/temas/${id}.json`).then(res=>{
-                                        if(!res.ok) throw new Error(`No existe el archivo: ./datos/temas/${id}.json`);
+        async descargarTemas() {
+                try {
+                        const promesas = [...this.temas].map(id => {
+                                return fetch(`datos/temas/${id}.json`).then(res => {
+                                        if (!res.ok) throw new Error(`No existe el archivo: ./datos/temas/${id}.json`);
                                         return res.json();
                                 });
                         });
                         const lista = await Promise.all(promesas);
                         this.vocabulario = [];
-                        lista.forEach(json=>{
+                        lista.forEach(json => {
                                 this.vocabulario.push(...json.vocabulario);// reune todo el vocabulario seleccionado
                         });
-                } catch (error){
+                } catch (error) {
 
                 }
+        }
+        crearUrlDeImagenWiki(imgPath, width = 300) {
+                if (!imgPath) return "";
+
+                const fileName = imgPath.split('/').pop();
+                // url base de miniaturas de Wikimedia
+                const baseUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/";
+
+                // Wikimedia genera un PNG de la miniatura del SVG
+                let thumbName = fileName;
+                if (fileName.toLowerCase().endsWith('.svg')) {
+                        thumbName += ".png";
+                }
+                // 4. Construcción de la URL de miniatura (Thumbnail)
+                // Estructura: base + ruta/del/hash + / + ancho + px- + nombre_para_miniatura
+                return `${baseUrl}${imgPath}/${width}px-${thumbName}`;
         }
 
 
