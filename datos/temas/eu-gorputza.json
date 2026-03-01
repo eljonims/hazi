@@ -874,8 +874,8 @@
         "anat.",
         "bizk."
       ]
-    }
-  {
+    },
+    {
       "k": "giltzurrun",
       "ref": "",
       "r": 2,
@@ -1213,7 +1213,7 @@
         "batua"
       ]
     },
-     {
+    {
       "k": "txinbil",
       "ref": "orkatila",
       "r": 2,
@@ -1223,11 +1223,12 @@
       "e": [
         "iz.",
         "anat.",
-         "bizk."
+        "bizk."
       ]
     },
     {
-      "k": "aztal","ref": "",
+      "k": "aztal",
+      "ref": "",
       "r": 2,
       "def": "talón / calcañar",
       "img": [],
@@ -1239,7 +1240,8 @@
       ]
     },
     {
-      "k": "eskupalmak","ref": "",
+      "k": "eskupalmak",
+      "ref": "",
       "r": 2,
       "def": "palma de la mano",
       "img": [],
@@ -1251,7 +1253,8 @@
       ]
     },
     {
-      "k": "ahur","ref": "",
+      "k": "ahur",
+      "ref": "",
       "r": 2,
       "def": "palma / cuenco de la mano",
       "img": [],
@@ -1263,7 +1266,8 @@
       ]
     },
     {
-      "k": "oinazpi","ref": "",
+      "k": "oinazpi",
+      "ref": "",
       "r": 2,
       "def": "planta del pie",
       "img": [],
@@ -1275,7 +1279,8 @@
       ]
     },
     {
-      "k": "behatz-mamia","ref": "",
+      "k": "behatz-mamia",
+      "ref": "",
       "r": 2,
       "def": "yema del dedo",
       "img": [],
@@ -1287,7 +1292,8 @@
       ]
     },
     {
-      "k": "uztarri","ref": "",
+      "k": "uztarri",
+      "ref": "",
       "r": 2,
       "def": "articulación / coyuntura",
       "img": [],
@@ -1299,7 +1305,8 @@
       ]
     },
     {
-      "k": "giltzadura","ref": "uztarri",
+      "k": "giltzadura",
+      "ref": "uztarri",
       "r": 2,
       "def": "articulación",
       "img": [],
@@ -1311,7 +1318,8 @@
       ]
     },
     {
-      "k": "listu","ref": "",
+      "k": "listu",
+      "ref": "",
       "r": 1,
       "def": "saliva",
       "img": [],
@@ -1323,7 +1331,8 @@
       ]
     },
     {
-      "k": "tua","ref": "listu",
+      "k": "tua",
+      "ref": "listu",
       "r": 1,
       "def": "saliva / esputo",
       "img": [],
@@ -1335,7 +1344,8 @@
       ]
     },
     {
-      "k": "izerdi","ref": "",
+      "k": "izerdi",
+      "ref": "",
       "r": 1,
       "def": "sudor",
       "img": [],
@@ -1347,7 +1357,8 @@
       ]
     },
     {
-      "k": "pis","ref": "gernu",
+      "k": "pis",
+      "ref": "gernu",
       "r": 1,
       "def": "pis / orina",
       "img": [],
@@ -1360,7 +1371,8 @@
       ]
     },
     {
-      "k": "txuri","ref": "pis",
+      "k": "txuri",
+      "ref": "pis",
       "r": 1,
       "def": "pis",
       "img": [],
@@ -1373,7 +1385,8 @@
       ]
     },
     {
-      "k": "kak","ref": "gorotz",
+      "k": "kak",
+      "ref": "gorotz",
       "r": 1,
       "def": "caca / excremento",
       "img": [],
@@ -1386,7 +1399,8 @@
       ]
     },
     {
-      "k": "gorotz","ref": "",
+      "k": "gorotz",
+      "ref": "",
       "r": 2,
       "def": "excremento / estiércol",
       "img": [],
@@ -1398,7 +1412,8 @@
       ]
     },
     {
-      "k": "malko","ref": "",
+      "k": "malko",
+      "ref": "",
       "r": 1,
       "def": "lágrima",
       "img": [],
@@ -1410,7 +1425,8 @@
       ]
     },
     {
-      "k": "negar-malko","ref": "malko",
+      "k": "negar-malko",
+      "ref": "malko",
       "r": 1,
       "def": "lágrima",
       "img": [],
@@ -1422,7 +1438,8 @@
       ]
     },
     {
-      "k": "zornatuta","ref": "",
+      "k": "zornatuta",
+      "ref": "",
       "r": 2,
       "def": "pus",
       "img": [],
@@ -1434,7 +1451,8 @@
       ]
     },
     {
-      "k": "zornatze","ref": "zornatuta",
+      "k": "zornatze",
+      "ref": "zornatuta",
       "r": 2,
       "def": "pus",
       "img": [],
@@ -1446,7 +1464,8 @@
       ]
     },
     {
-      "k": "muki","ref": "",
+      "k": "muki",
+      "ref": "",
       "r": 1,
       "def": "moco",
       "img": [],
@@ -1458,7 +1477,8 @@
       ]
     },
     {
-      "k": "behazun","ref": "",
+      "k": "behazun",
+      "ref": "",
       "r": 2,
       "def": "bilis",
       "img": [],
@@ -1470,7 +1490,8 @@
       ]
     },
     {
-      "k": "gernu","ref": "",
+      "k": "gernu",
+      "ref": "",
       "r": 2,
       "def": "orina",
       "img": [],
@@ -1482,7 +1503,8 @@
       ]
     },
     {
-      "k": "txuri","ref": "gernu",
+      "k": "txuri",
+      "ref": "gernu",
       "r": 2,
       "def": "orina",
       "img": [],
@@ -1494,7 +1516,8 @@
       ]
     },
     {
-      "k": "orban","ref": "",
+      "k": "orban",
+      "ref": "",
       "r": 2,
       "def": "lunar",
       "img": [],
@@ -1506,7 +1529,8 @@
       ]
     },
     {
-      "k": "Epel","ref": "orban",
+      "k": "Epel",
+      "ref": "orban",
       "r": 2,
       "def": "lunar",
       "img": [],
@@ -1518,7 +1542,8 @@
       ]
     },
     {
-      "k": "zimur","ref": "",
+      "k": "zimur",
+      "ref": "",
       "r": 2,
       "def": "arruga",
       "img": [],
@@ -1530,7 +1555,8 @@
       ]
     },
     {
-      "k": "izurtu","ref": "zimur",
+      "k": "izurtu",
+      "ref": "zimur",
       "r": 2,
       "def": "arruga",
       "img": [],
@@ -1542,7 +1568,8 @@
       ]
     },
     {
-      "k": "garatxo","ref": "",
+      "k": "garatxo",
+      "ref": "",
       "r": 2,
       "def": "verruga",
       "img": [],
@@ -1554,7 +1581,8 @@
       ]
     },
     {
-      "k": "kailu","ref": "",
+      "k": "kailu",
+      "ref": "",
       "r": 2,
       "def": "callo",
       "img": [],
@@ -1566,7 +1594,8 @@
       ]
     },
     {
-      "k": "besakar","ref": "",
+      "k": "besakar",
+      "ref": "",
       "r": 2,
       "def": "vello (brazos/piernas)",
       "img": [],
@@ -1578,7 +1607,8 @@
       ]
     },
     {
-      "k": "bizar","ref": "",
+      "k": "bizar",
+      "ref": "",
       "r": 2,
       "def": "barba",
       "img": [],
@@ -1590,7 +1620,8 @@
       ]
     },
     {
-      "k": "parta","ref": "bizar",
+      "k": "parta",
+      "ref": "bizar",
       "r": 2,
       "def": "barba",
       "img": [],
@@ -1602,7 +1633,8 @@
       ]
     },
     {
-      "k": "bibote","ref": "",
+      "k": "bibote",
+      "ref": "",
       "r": 2,
       "def": "bigote",
       "img": [],
@@ -1614,7 +1646,8 @@
       ]
     },
     {
-      "k": "mustatxa","ref": "bibote",
+      "k": "mustatxa",
+      "ref": "bibote",
       "r": 2,
       "def": "bigote",
       "img": [],
@@ -1626,7 +1659,8 @@
       ]
     },
     {
-      "k": "estalki","ref": "",
+      "k": "estalki",
+      "ref": "",
       "r": 2,
       "def": "vello / vellosidad",
       "img": [],
@@ -1638,7 +1672,8 @@
       ]
     },
     {
-      "k": "buru-hezur","ref": "",
+      "k": "buru-hezur",
+      "ref": "",
       "r": 3,
       "def": "cráneo",
       "img": [],
@@ -1650,7 +1685,8 @@
       ]
     },
     {
-      "k": "kaskezur","ref": "buru-hezur",
+      "k": "kaskezur",
+      "ref": "buru-hezur",
       "r": 3,
       "def": "cráneo",
       "img": [],
@@ -1662,7 +1698,8 @@
       ]
     },
     {
-      "k": "izterrezur","ref": "",
+      "k": "izterrezur",
+      "ref": "",
       "r": 3,
       "def": "fémur",
       "img": [],
@@ -1674,7 +1711,8 @@
       ]
     },
     {
-      "k": "bertebra","ref": "",
+      "k": "bertebra",
+      "ref": "",
       "r": 3,
       "def": "vértebra",
       "img": [],
@@ -1686,7 +1724,8 @@
       ]
     },
     {
-      "k": "ornu","ref": "bertebra",
+      "k": "ornu",
+      "ref": "bertebra",
       "r": 3,
       "def": "vértebra",
       "img": [],
@@ -1698,7 +1737,8 @@
       ]
     },
     {
-      "k": "pelbis-hezur","ref": "",
+      "k": "pelbis-hezur",
+      "ref": "",
       "r": 3,
       "def": "pelvis / hueso pélvico",
       "img": [],
@@ -1710,7 +1750,8 @@
       ]
     },
     {
-      "k": "omoplato","ref": "",
+      "k": "omoplato",
+      "ref": "",
       "r": 3,
       "def": "omóplato",
       "img": [],
@@ -1722,7 +1763,8 @@
       ]
     },
     {
-      "k": "eskapula","ref": "",
+      "k": "eskapula",
+      "ref": "",
       "r": 3,
       "def": "escápula",
       "img": [],
@@ -1734,7 +1776,8 @@
       ]
     },
     {
-      "k": "erradio","ref": "",
+      "k": "erradio",
+      "ref": "",
       "r": 3,
       "def": "radio",
       "img": [],
@@ -1746,7 +1789,8 @@
       ]
     },
     {
-      "k": "ulna","ref": "",
+      "k": "ulna",
+      "ref": "",
       "r": 3,
       "def": "cúbito",
       "img": [],
@@ -1758,7 +1802,8 @@
       ]
     },
     {
-      "k": "tibia","ref": "",
+      "k": "tibia",
+      "ref": "",
       "r": 3,
       "def": "tibia",
       "img": [],
@@ -1770,7 +1815,8 @@
       ]
     },
     {
-      "k": "perone","ref": "",
+      "k": "perone",
+      "ref": "",
       "r": 3,
       "def": "peroné",
       "img": [],
@@ -1782,7 +1828,8 @@
       ]
     },
     {
-      "k": "lotailu","ref": "",
+      "k": "lotailu",
+      "ref": "",
       "r": 3,
       "def": "ligamento",
       "img": [],
@@ -1794,7 +1841,8 @@
       ]
     },
     {
-      "k": "kartilago","ref": "",
+      "k": "kartilago",
+      "ref": "",
       "r": 3,
       "def": "cartílago",
       "img": [],
@@ -1806,7 +1854,8 @@
       ]
     },
     {
-      "k": "hatz lodia","ref": "",
+      "k": "hatz lodia",
+      "ref": "",
       "r": 2,
       "def": "pulgar",
       "img": [],
@@ -1818,7 +1867,8 @@
       ]
     },
     {
-      "k": "poliz","ref": "hatz lodia",
+      "k": "poliz",
+      "ref": "hatz lodia",
       "r": 2,
       "def": "pulgar",
       "img": [],
@@ -1830,7 +1880,8 @@
       ]
     },
     {
-      "k": "erakusle","ref": "",
+      "k": "erakusle",
+      "ref": "",
       "r": 2,
       "def": "índice",
       "img": [],
@@ -1842,7 +1893,8 @@
       ]
     },
     {
-      "k": "erakusle-hatz","ref": "erakusle",
+      "k": "erakusle-hatz",
+      "ref": "erakusle",
       "r": 2,
       "def": "índice",
       "img": [],
@@ -1854,7 +1906,8 @@
       ]
     },
     {
-      "k": "erdiko hatz","ref": "",
+      "k": "erdiko hatz",
+      "ref": "",
       "r": 2,
       "def": "dedo corazón / medio",
       "img": [],
@@ -1866,7 +1919,8 @@
       ]
     },
     {
-      "k": "hatz nagusi","ref": "erdiko hatz",
+      "k": "hatz nagusi",
+      "ref": "erdiko hatz",
       "r": 2,
       "def": "dedo corazón",
       "img": [],
@@ -1878,7 +1932,8 @@
       ]
     },
     {
-      "k": "eraztun-hatz","ref": "",
+      "k": "eraztun-hatz",
+      "ref": "",
       "r": 2,
       "def": "anular",
       "img": [],
@@ -1890,7 +1945,8 @@
       ]
     },
     {
-      "k": "hatz txiki","ref": "",
+      "k": "hatz txiki",
+      "ref": "",
       "r": 2,
       "def": "meñique",
       "img": [],
@@ -1902,7 +1958,8 @@
       ]
     },
     {
-      "k": "txitxikolin","ref": "hatz txiki",
+      "k": "txitxikolin",
+      "ref": "hatz txiki",
       "r": 2,
       "def": "meñique",
       "img": [],
@@ -1915,7 +1972,8 @@
       ]
     },
     {
-      "k": "ugalketa-aparatu","ref": "",
+      "k": "ugalketa-aparatu",
+      "ref": "",
       "r": 2,
       "def": "aparato reproductor",
       "img": [],
