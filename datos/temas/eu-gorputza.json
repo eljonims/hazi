@@ -1,0 +1,2074 @@
+{
+  "file": "eu-gorputza.json",
+  "id": "eu-gorp",
+  "title": "Cuerpo Humano",
+  "lex": [
+    {
+      "k": "gorputz",
+      "ref": "",
+      "r": 1,
+      "def": "cuerpo",
+      "img": [],
+      "snd": [],
+      "e": [
+        "iz.",
+        "anat.",
+        "batua"
+      ]
+    },
+    {
+      "k": "korputz",
+      "ref": "gorputz",
+      "r": 1,
+      "def": "cuerpo",
+      "img": [],
+      "snd": [],
+      "e": [
+        "iz.",
+        "anat.",
+        "bizk."
+      ]
+    },
+    {
+      "k": "esku",
+      "ref": "",
+      "r": 1,
+      "def": "mano",
+      "img": [],
+      "snd": [],
+      "e": [
+        "iz.",
+        "anat.",
+        "batua"
+      ]
+    },
+    {
+      "k": "oin",
+      "ref": "",
+      "r": 1,
+      "def": "pie",
+      "img": [],
+      "snd": [],
+      "e": [
+        "iz.",
+        "anat.",
+        "batua"
+      ]
+    },
+    {
+      "k": "begi",
+      "ref": "",
+      "r": 1,
+      "def": "ojo",
+      "img": [],
+      "snd": [],
+      "e": [
+        "iz.",
+        "anat.",
+        "batua"
+      ]
+    },
+    {
+      "k": "aho",
+      "ref": "",
+      "r": 1,
+      "def": "boca",
+      "img": [],
+      "snd": [],
+      "e": [
+        "iz.",
+        "anat.",
+        "batua"
+      ]
+    },
+    {
+      "k": "beso",
+      "ref": "",
+      "r": 1,
+      "def": "brazo",
+      "img": [],
+      "snd": [],
+      "e": [
+        "iz.",
+        "anat.",
+        "batua"
+      ]
+    },
+    {
+      "k": "hanka",
+      "ref": "",
+      "r": 1,
+      "def": "pierna",
+      "img": [],
+      "snd": [],
+      "e": [
+        "iz.",
+        "anat.",
+        "batua"
+      ]
+    },
+    {
+      "k": "bizkar",
+      "ref": "",
+      "r": 1,
+      "def": "espalda",
+      "img": [],
+      "snd": [],
+      "e": [
+        "iz.",
+        "anat.",
+        "batua"
+      ]
+    },
+    {
+      "k": "bihotz",
+      "ref": "",
+      "r": 1,
+      "def": "corazón",
+      "img": [],
+      "snd": [],
+      "e": [
+        "iz.",
+        "anat.",
+        "batua"
+      ]
+    },
+    {
+      "k": "hatz",
+      "ref": "",
+      "r": 1,
+      "def": "dedo (mano)",
+      "img": [],
+      "snd": [],
+      "e": [
+        "iz.",
+        "anat.",
+        "batua"
+      ]
+    },
+    {
+      "k": "behatz",
+      "ref": "",
+      "r": 1,
+      "def": "dedo (pie)",
+      "img": [],
+      "snd": [],
+      "e": [
+        "iz.",
+        "anat.",
+        "batua"
+      ]
+    },
+    {
+      "k": "belarri",
+      "ref": "",
+      "r": 1,
+      "def": "oreja",
+      "img": [],
+      "snd": [],
+      "e": [
+        "iz.",
+        "anat.",
+        "batua"
+      ]
+    },
+    {
+      "k": "sudur",
+      "ref": "",
+      "r": 1,
+      "def": "nariz",
+      "img": [],
+      "snd": [],
+      "e": [
+        "iz.",
+        "anat.",
+        "batua"
+      ]
+    },
+    {
+      "k": "ile",
+      "ref": "",
+      "r": 1,
+      "def": "pelo",
+      "img": [],
+      "snd": [],
+      "e": [
+        "iz.",
+        "anat.",
+        "batua"
+      ]
+    },
+    {
+      "k": "odol",
+      "ref": "",
+      "r": 1,
+      "def": "sangre",
+      "img": [],
+      "snd": [],
+      "e": [
+        "iz.",
+        "anat.",
+        "batua"
+      ]
+    },
+    {
+      "k": "gorputz",
+      "ref": "",
+      "r": 1,
+      "def": "cuerpo",
+      "img": [],
+      "snd": [],
+      "e": [
+        "iz.",
+        "anat.",
+        "batua"
+      ]
+    },
+    {
+      "k": "aurpegi",
+      "ref": "",
+      "r": 1,
+      "def": "cara",
+      "img": [],
+      "snd": [],
+      "e": [
+        "iz.",
+        "anat.",
+        "batua"
+      ]
+    },
+    {
+      "k": "hortz",
+      "ref": "",
+      "r": 1,
+      "def": "diente",
+      "img": [],
+      "snd": [],
+      "e": [
+        "iz.",
+        "anat.",
+        "batua"
+      ]
+    },
+    {
+      "k": "mihi",
+      "ref": "",
+      "r": 1,
+      "def": "lengua",
+      "img": [],
+      "snd": [],
+      "e": [
+        "iz.",
+        "anat.",
+        "batua"
+      ]
+    },
+    {
+      "k": "lepo",
+      "ref": "",
+      "r": 1,
+      "def": "cuello",
+      "img": [],
+      "snd": [],
+      "e": [
+        "iz.",
+        "anat.",
+        "batua"
+      ]
+    },
+    {
+      "k": "hezur",
+      "ref": "",
+      "r": 1,
+      "def": "hueso",
+      "img": [],
+      "snd": [],
+      "e": [
+        "iz.",
+        "anat.",
+        "batua"
+      ]
+    },
+    {
+      "k": "sabel",
+      "ref": "",
+      "r": 1,
+      "def": "vientre / tripa",
+      "img": [],
+      "snd": [],
+      "e": [
+        "iz.",
+        "anat.",
+        "batua"
+      ]
+    },
+    {
+      "k": "urdail",
+      "ref": "",
+      "r": 1,
+      "def": "estómago",
+      "img": [],
+      "snd": [],
+      "e": [
+        "iz.",
+        "anat.",
+        "batua"
+      ]
+    },
+    {
+      "k": "belaun",
+      "ref": "",
+      "r": 1,
+      "def": "rodilla",
+      "img": [],
+      "snd": [],
+      "e": [
+        "iz.",
+        "anat.",
+        "batua"
+      ]
+    },
+    {
+      "k": "ukondo",
+      "ref": "",
+      "r": 1,
+      "def": "codo",
+      "img": [],
+      "snd": [],
+      "e": [
+        "iz.",
+        "anat.",
+        "batua"
+      ]
+    },
+    {
+      "k": "azkazal",
+      "ref": "",
+      "r": 1,
+      "def": "uña",
+      "img": [],
+      "snd": [],
+      "e": [
+        "iz.",
+        "anat.",
+        "batua"
+      ]
+    },
+    {
+      "k": "sorbalda",
+      "ref": "",
+      "r": 1,
+      "def": "hombro",
+      "img": [],
+      "snd": [],
+      "e": [
+        "iz.",
+        "anat.",
+        "batua"
+      ]
+    },
+    {
+      "k": "bular",
+      "ref": "",
+      "r": 1,
+      "def": "pecho",
+      "img": [],
+      "snd": [],
+      "e": [
+        "iz.",
+        "anat.",
+        "batua"
+      ]
+    },
+    {
+      "k": "azal",
+      "ref": "",
+      "r": 1,
+      "def": "piel",
+      "img": [],
+      "snd": [],
+      "e": [
+        "iz.",
+        "anat.",
+        "batua"
+      ]
+    },
+    {
+      "k": "ipurdi",
+      "ref": "",
+      "r": 1,
+      "def": "trasero",
+      "img": [],
+      "snd": [],
+      "e": [
+        "iz.",
+        "anat.",
+        "lagun.",
+        "batua"
+      ]
+    },
+    {
+      "k": "gihar",
+      "ref": "",
+      "r": 1,
+      "def": "músculo",
+      "img": [],
+      "snd": [],
+      "e": [
+        "iz.",
+        "anat.",
+        "batua"
+      ]
+    },
+    {
+      "k": "kopeta",
+      "ref": "",
+      "r": 1,
+      "def": "frente",
+      "img": [],
+      "snd": [],
+      "e": [
+        "iz.",
+        "anat.",
+        "batua"
+      ]
+    },
+    {
+      "k": "masaila",
+      "ref": "",
+      "r": 1,
+      "def": "mejilla",
+      "img": [],
+      "snd": [],
+      "e": [
+        "iz.",
+        "anat.",
+        "batua"
+      ]
+    },
+    {
+      "k": "ezpain",
+      "ref": "",
+      "r": 1,
+      "def": "labio",
+      "img": [],
+      "snd": [],
+      "e": [
+        "iz.",
+        "anat.",
+        "batua"
+      ]
+    },
+    {
+      "k": "bekain",
+      "ref": "",
+      "r": 1,
+      "def": "ceja",
+      "img": [],
+      "snd": [],
+      "e": [
+        "iz.",
+        "anat.",
+        "batua"
+      ]
+    },
+    {
+      "k": "entzumen",
+      "ref": "",
+      "r": 2,
+      "def": "oído",
+      "img": [],
+      "snd": [],
+      "e": [
+        "iz.",
+        "anat.",
+        "batua"
+      ]
+    },
+    {
+      "k": "orraitz",
+      "ref": "",
+      "r": 2,
+      "def": "peca",
+      "img": [],
+      "snd": [],
+      "e": [
+        "iz.",
+        "anat.",
+        "batua"
+      ]
+    },
+    {
+      "k": "pizkor",
+      "ref": "",
+      "r": 2,
+      "def": "peca",
+      "img": [],
+      "snd": [],
+      "e": [
+        "iz.",
+        "anat.",
+        "bizk."
+      ]
+    },
+    {
+      "k": "begizulo",
+      "ref": "",
+      "r": 2,
+      "def": "ojera",
+      "img": [],
+      "snd": [],
+      "e": [
+        "iz.",
+        "anat.",
+        "batua"
+      ]
+    },
+    {
+      "k": "betile",
+      "ref": "",
+      "r": 2,
+      "def": "pestaña",
+      "img": [],
+      "snd": [],
+      "e": [
+        "iz.",
+        "anat.",
+        "batua"
+      ]
+    },
+    {
+      "k": "betipsun",
+      "ref": "betile",
+      "r": 2,
+      "def": "pestaña",
+      "img": [],
+      "snd": [],
+      "e": [
+        "iz.",
+        "anat.",
+        "gip."
+      ]
+    },
+    {
+      "k": "betazal",
+      "ref": "",
+      "r": 2,
+      "def": "párpado",
+      "img": [],
+      "snd": [],
+      "e": [
+        "iz.",
+        "anat.",
+        "batua"
+      ]
+    },
+    {
+      "k": "kokots",
+      "ref": "",
+      "r": 2,
+      "def": "barbilla / mentón",
+      "img": [],
+      "snd": [],
+      "e": [
+        "iz.",
+        "anat.",
+        "batua"
+      ]
+    },
+    {
+      "k": "kokotza",
+      "ref": "kokots",
+      "r": 2,
+      "def": "barbilla / mentón",
+      "img": [],
+      "snd": [],
+      "e": [
+        "iz.",
+        "anat.",
+        "gip."
+      ]
+    },
+    {
+      "k": "baile",
+      "ref": "kokots",
+      "r": 2,
+      "def": "barbilla",
+      "img": [],
+      "snd": [],
+      "e": [
+        "iz.",
+        "anat.",
+        "bizk."
+      ]
+    },
+    {
+      "k": "sien",
+      "ref": "",
+      "r": 2,
+      "def": "sien",
+      "img": [],
+      "snd": [],
+      "e": [
+        "iz.",
+        "anat.",
+        "batua"
+      ]
+    },
+    {
+      "k": "matraila-hezur",
+      "ref": "",
+      "r": 2,
+      "def": "mandíbula",
+      "img": [],
+      "snd": [],
+      "e": [
+        "iz.",
+        "anat.",
+        "batua"
+      ]
+    },
+    {
+      "k": "eztarri",
+      "ref": "",
+      "r": 2,
+      "def": "garganta",
+      "img": [],
+      "snd": [],
+      "e": [
+        "iz.",
+        "anat.",
+        "batua"
+      ]
+    },
+    {
+      "k": "gangar",
+      "ref": "eztarri",
+      "r": 2,
+      "def": "garganta / gaznate",
+      "img": [],
+      "snd": [],
+      "e": [
+        "iz.",
+        "anat.",
+        "bizk."
+      ]
+    },
+    {
+      "k": "lepo-hezur",
+      "ref": "",
+      "r": 2,
+      "def": "clavícula",
+      "img": [],
+      "snd": [],
+      "e": [
+        "iz.",
+        "anat.",
+        "batua"
+      ]
+    },
+    {
+      "k": "lepauztail",
+      "ref": "lepo-hezur",
+      "r": 2,
+      "def": "clavícula",
+      "img": [],
+      "snd": [],
+      "e": [
+        "iz.",
+        "anat.",
+        "gip."
+      ]
+    },
+    {
+      "k": "garondo",
+      "ref": "",
+      "r": 2,
+      "def": "nuca",
+      "img": [],
+      "snd": [],
+      "e": [
+        "iz.",
+        "anat.",
+        "batua"
+      ]
+    },
+    {
+      "k": "atze-lepo",
+      "ref": "garondo",
+      "r": 2,
+      "def": "nuca",
+      "img": [],
+      "snd": [],
+      "e": [
+        "iz.",
+        "anat.",
+        "bizk."
+      ]
+    },
+    {
+      "k": "zintzur-sagar",
+      "ref": "",
+      "r": 2,
+      "def": "nuez de adán",
+      "img": [],
+      "snd": [],
+      "e": [
+        "iz.",
+        "anat.",
+        "batua"
+      ]
+    },
+    {
+      "k": "zintzur",
+      "ref": "",
+      "r": 2,
+      "def": "tráquea / laringe",
+      "img": [],
+      "snd": [],
+      "e": [
+        "iz.",
+        "anat.",
+        "batua"
+      ]
+    },
+    {
+      "k": "gingil",
+      "ref": "",
+      "r": 3,
+      "def": "campanilla / úvula",
+      "img": [],
+      "snd": [],
+      "e": [
+        "iz.",
+        "anat.",
+        "batua"
+      ]
+    },
+    {
+      "k": "zilbor",
+      "ref": "",
+      "r": 2,
+      "def": "ombligo",
+      "img": [],
+      "snd": [],
+      "e": [
+        "iz.",
+        "anat.",
+        "batua"
+      ]
+    },
+    {
+      "k": "zilbot",
+      "ref": "zilbor",
+      "r": 2,
+      "def": "ombligo",
+      "img": [],
+      "snd": [],
+      "e": [
+        "iz.",
+        "anat.",
+        "bizk."
+      ]
+    },
+    {
+      "k": "gerri",
+      "ref": "",
+      "r": 2,
+      "def": "cintura",
+      "img": [],
+      "snd": [],
+      "e": [
+        "iz.",
+        "anat.",
+        "batua"
+      ]
+    },
+    {
+      "k": "saihets",
+      "ref": "",
+      "r": 2,
+      "def": "costilla",
+      "img": [],
+      "snd": [],
+      "e": [
+        "iz.",
+        "anat.",
+        "batua"
+      ]
+    },
+    {
+      "k": "saihets-hezur",
+      "ref": "saihets",
+      "r": 2,
+      "def": "costilla",
+      "img": [],
+      "snd": [],
+      "e": [
+        "iz.",
+        "anat.",
+        "gip."
+      ]
+    },
+    {
+      "k": "bularrezur",
+      "ref": "",
+      "r": 2,
+      "def": "esternón",
+      "img": [],
+      "snd": [],
+      "e": [
+        "iz.",
+        "anat.",
+        "batua"
+      ]
+    },
+    {
+      "k": "bizkarrezur",
+      "ref": "",
+      "r": 2,
+      "def": "columna vertebral",
+      "img": [],
+      "snd": [],
+      "e": [
+        "iz.",
+        "anat.",
+        "batua"
+      ]
+    },
+    {
+      "k": "gerruntze",
+      "ref": "",
+      "r": 2,
+      "def": "lumbares / zona lumbar",
+      "img": [],
+      "snd": [],
+      "e": [
+        "iz.",
+        "anat.",
+        "batua"
+      ]
+    },
+    {
+      "k": "maskuri",
+      "ref": "",
+      "r": 2,
+      "def": "vejiga",
+      "img": [],
+      "snd": [],
+      "e": [
+        "iz.",
+        "anat.",
+        "batua"
+      ]
+    },
+    {
+      "k": "puzkar",
+      "ref": "maskuri",
+      "r": 2,
+      "def": "vejiga",
+      "img": [],
+      "snd": [],
+      "e": [
+        "iz.",
+        "anat.",
+        "bizk."
+      ]
+    }
+  {
+      "k": "giltzurrun",
+      "ref": "",
+      "r": 2,
+      "def": "riñón",
+      "img": [],
+      "snd": [],
+      "e": [
+        "iz.",
+        "anat.",
+        "batua"
+      ]
+    },
+    {
+      "k": "galtzarbe",
+      "ref": "",
+      "r": 2,
+      "def": "axila / sobaco",
+      "img": [],
+      "snd": [],
+      "e": [
+        "iz.",
+        "anat.",
+        "batua"
+      ]
+    },
+    {
+      "k": "besazpi",
+      "ref": "galtzarbe",
+      "r": 2,
+      "def": "axila / sobaco",
+      "img": [],
+      "snd": [],
+      "e": [
+        "iz.",
+        "anat.",
+        "bizk."
+      ]
+    },
+    {
+      "k": "pelbis",
+      "ref": "",
+      "r": 2,
+      "def": "pelvis",
+      "img": [],
+      "snd": [],
+      "e": [
+        "iz.",
+        "anat.",
+        "batua"
+      ]
+    },
+    {
+      "k": "mokor",
+      "ref": "",
+      "r": 2,
+      "def": "cadera",
+      "img": [],
+      "snd": [],
+      "e": [
+        "iz.",
+        "anat.",
+        "batua"
+      ]
+    },
+    {
+      "k": "aldaka",
+      "ref": "mokor",
+      "r": 2,
+      "def": "cadera",
+      "img": [],
+      "snd": [],
+      "e": [
+        "iz.",
+        "anat.",
+        "gip."
+      ]
+    },
+    {
+      "k": "iztai",
+      "ref": "",
+      "r": 2,
+      "def": "ingle",
+      "img": [],
+      "snd": [],
+      "e": [
+        "iz.",
+        "anat.",
+        "batua"
+      ]
+    },
+    {
+      "k": "iztondo",
+      "ref": "iztai",
+      "r": 2,
+      "def": "ingle",
+      "img": [],
+      "snd": [],
+      "e": [
+        "iz.",
+        "anat.",
+        "bizk."
+      ]
+    },
+    {
+      "k": "gerrialde",
+      "ref": "",
+      "r": 2,
+      "def": "zona lumbar / cintura",
+      "img": [],
+      "snd": [],
+      "e": [
+        "iz.",
+        "anat.",
+        "batua"
+      ]
+    },
+    {
+      "k": "garun",
+      "ref": "",
+      "r": 2,
+      "def": "cerebro",
+      "img": [],
+      "snd": [],
+      "e": [
+        "iz.",
+        "anat.",
+        "batua"
+      ]
+    },
+    {
+      "k": "muin",
+      "ref": "garun",
+      "r": 2,
+      "def": "cerebro / seso",
+      "img": [],
+      "snd": [],
+      "e": [
+        "iz.",
+        "anat.",
+        "bizk."
+      ]
+    },
+    {
+      "k": "birika",
+      "ref": "",
+      "r": 2,
+      "def": "pulmón",
+      "img": [],
+      "snd": [],
+      "e": [
+        "iz.",
+        "anat.",
+        "batua"
+      ]
+    },
+    {
+      "k": "pika",
+      "ref": "birika",
+      "r": 2,
+      "def": "pulmón",
+      "img": [],
+      "snd": [],
+      "e": [
+        "iz.",
+        "anat.",
+        "bizk."
+      ]
+    },
+    {
+      "k": "gibel",
+      "ref": "",
+      "r": 2,
+      "def": "hígado",
+      "img": [],
+      "snd": [],
+      "e": [
+        "iz.",
+        "anat.",
+        "batua"
+      ]
+    },
+    {
+      "k": "este",
+      "ref": "",
+      "r": 2,
+      "def": "intestino / tripa",
+      "img": [],
+      "snd": [],
+      "e": [
+        "iz.",
+        "anat.",
+        "batua"
+      ]
+    },
+    {
+      "k": "heste",
+      "ref": "este",
+      "r": 2,
+      "def": "intestino",
+      "img": [],
+      "snd": [],
+      "e": [
+        "iz.",
+        "anat.",
+        "ipar."
+      ]
+    },
+    {
+      "k": "pankrea",
+      "ref": "",
+      "r": 2,
+      "def": "páncreas",
+      "img": [],
+      "snd": [],
+      "e": [
+        "iz.",
+        "anat.",
+        "batua"
+      ]
+    },
+    {
+      "k": "besikula",
+      "ref": "",
+      "r": 2,
+      "def": "vesícula",
+      "img": [],
+      "snd": [],
+      "e": [
+        "iz.",
+        "anat.",
+        "batua"
+      ]
+    },
+    {
+      "k": "nerbio",
+      "ref": "",
+      "r": 2,
+      "def": "nervio",
+      "img": [],
+      "snd": [],
+      "e": [
+        "iz.",
+        "anat.",
+        "batua"
+      ]
+    },
+    {
+      "k": "zena",
+      "ref": "",
+      "r": 2,
+      "def": "vena",
+      "img": [],
+      "snd": [],
+      "e": [
+        "iz.",
+        "anat.",
+        "batua"
+      ]
+    },
+    {
+      "k": "zain",
+      "ref": "",
+      "r": 2,
+      "def": "vena / tendón",
+      "img": [],
+      "snd": [],
+      "e": [
+        "iz.",
+        "anat.",
+        "bizk."
+      ]
+    },
+    {
+      "k": "eskutur",
+      "ref": "",
+      "r": 2,
+      "def": "muñeca",
+      "img": [],
+      "snd": [],
+      "e": [
+        "iz.",
+        "anat.",
+        "batua"
+      ]
+    },
+    {
+      "k": "eskumutur",
+      "ref": "eskutur",
+      "r": 2,
+      "def": "muñeca",
+      "img": [],
+      "snd": [],
+      "e": [
+        "iz.",
+        "anat.",
+        "gip."
+      ]
+    },
+    {
+      "k": "oinbular",
+      "ref": "",
+      "r": 2,
+      "def": "empeine",
+      "img": [],
+      "snd": [],
+      "e": [
+        "iz.",
+        "anat.",
+        "batua"
+      ]
+    },
+    {
+      "k": "estirailu",
+      "ref": "oinbular",
+      "r": 2,
+      "def": "empeine",
+      "img": [],
+      "snd": [],
+      "e": [
+        "iz.",
+        "anat.",
+        "bizk."
+      ]
+    },
+    {
+      "k": "orkatila",
+      "ref": "",
+      "r": 2,
+      "def": "tobillo",
+      "img": [],
+      "snd": [],
+      "e": [
+        "iz.",
+        "anat.",
+        "batua"
+      ]
+    },
+     {
+      "k": "txinbil",
+      "ref": "orkatila",
+      "r": 2,
+      "def": "tobillo",
+      "img": [],
+      "snd": [],
+      "e": [
+        "iz.",
+        "anat.",
+         "bizk."
+      ]
+    },
+    {
+      "k": "aztal","ref": "",
+      "r": 2,
+      "def": "talón / calcañar",
+      "img": [],
+      "snd": [],
+      "e": [
+        "iz.",
+        "anat.",
+        "batua"
+      ]
+    },
+    {
+      "k": "eskupalmak","ref": "",
+      "r": 2,
+      "def": "palma de la mano",
+      "img": [],
+      "snd": [],
+      "e": [
+        "iz.",
+        "anat.",
+        "batua"
+      ]
+    },
+    {
+      "k": "ahur","ref": "",
+      "r": 2,
+      "def": "palma / cuenco de la mano",
+      "img": [],
+      "snd": [],
+      "e": [
+        "iz.",
+        "anat.",
+        "batua"
+      ]
+    },
+    {
+      "k": "oinazpi","ref": "",
+      "r": 2,
+      "def": "planta del pie",
+      "img": [],
+      "snd": [],
+      "e": [
+        "iz.",
+        "anat.",
+        "batua"
+      ]
+    },
+    {
+      "k": "behatz-mamia","ref": "",
+      "r": 2,
+      "def": "yema del dedo",
+      "img": [],
+      "snd": [],
+      "e": [
+        "iz.",
+        "anat.",
+        "batua"
+      ]
+    },
+    {
+      "k": "uztarri","ref": "",
+      "r": 2,
+      "def": "articulación / coyuntura",
+      "img": [],
+      "snd": [],
+      "e": [
+        "iz.",
+        "anat.",
+        "batua"
+      ]
+    },
+    {
+      "k": "giltzadura","ref": "uztarri",
+      "r": 2,
+      "def": "articulación",
+      "img": [],
+      "snd": [],
+      "e": [
+        "iz.",
+        "anat.",
+        "gip."
+      ]
+    },
+    {
+      "k": "listu","ref": "",
+      "r": 1,
+      "def": "saliva",
+      "img": [],
+      "snd": [],
+      "e": [
+        "iz.",
+        "anat.",
+        "batua"
+      ]
+    },
+    {
+      "k": "tua","ref": "listu",
+      "r": 1,
+      "def": "saliva / esputo",
+      "img": [],
+      "snd": [],
+      "e": [
+        "iz.",
+        "anat.",
+        "bizk."
+      ]
+    },
+    {
+      "k": "izerdi","ref": "",
+      "r": 1,
+      "def": "sudor",
+      "img": [],
+      "snd": [],
+      "e": [
+        "iz.",
+        "anat.",
+        "batua"
+      ]
+    },
+    {
+      "k": "pis","ref": "gernu",
+      "r": 1,
+      "def": "pis / orina",
+      "img": [],
+      "snd": [],
+      "e": [
+        "iz.",
+        "anat.",
+        "lagun.",
+        "batua"
+      ]
+    },
+    {
+      "k": "txuri","ref": "pis",
+      "r": 1,
+      "def": "pis",
+      "img": [],
+      "snd": [],
+      "e": [
+        "iz.",
+        "anat.",
+        "lagun.",
+        "bizk."
+      ]
+    },
+    {
+      "k": "kak","ref": "gorotz",
+      "r": 1,
+      "def": "caca / excremento",
+      "img": [],
+      "snd": [],
+      "e": [
+        "iz.",
+        "anat.",
+        "lagun.",
+        "batua"
+      ]
+    },
+    {
+      "k": "gorotz","ref": "",
+      "r": 2,
+      "def": "excremento / estiércol",
+      "img": [],
+      "snd": [],
+      "e": [
+        "iz.",
+        "anat.",
+        "batua"
+      ]
+    },
+    {
+      "k": "malko","ref": "",
+      "r": 1,
+      "def": "lágrima",
+      "img": [],
+      "snd": [],
+      "e": [
+        "iz.",
+        "anat.",
+        "batua"
+      ]
+    },
+    {
+      "k": "negar-malko","ref": "malko",
+      "r": 1,
+      "def": "lágrima",
+      "img": [],
+      "snd": [],
+      "e": [
+        "iz.",
+        "anat.",
+        "gip."
+      ]
+    },
+    {
+      "k": "zornatuta","ref": "",
+      "r": 2,
+      "def": "pus",
+      "img": [],
+      "snd": [],
+      "e": [
+        "iz.",
+        "anat.",
+        "batua"
+      ]
+    },
+    {
+      "k": "zornatze","ref": "zornatuta",
+      "r": 2,
+      "def": "pus",
+      "img": [],
+      "snd": [],
+      "e": [
+        "iz.",
+        "anat.",
+        "bizk."
+      ]
+    },
+    {
+      "k": "muki","ref": "",
+      "r": 1,
+      "def": "moco",
+      "img": [],
+      "snd": [],
+      "e": [
+        "iz.",
+        "anat.",
+        "batua"
+      ]
+    },
+    {
+      "k": "behazun","ref": "",
+      "r": 2,
+      "def": "bilis",
+      "img": [],
+      "snd": [],
+      "e": [
+        "iz.",
+        "anat.",
+        "batua"
+      ]
+    },
+    {
+      "k": "gernu","ref": "",
+      "r": 2,
+      "def": "orina",
+      "img": [],
+      "snd": [],
+      "e": [
+        "iz.",
+        "anat.",
+        "batua"
+      ]
+    },
+    {
+      "k": "txuri","ref": "gernu",
+      "r": 2,
+      "def": "orina",
+      "img": [],
+      "snd": [],
+      "e": [
+        "iz.",
+        "anat.",
+        "bizk."
+      ]
+    },
+    {
+      "k": "orban","ref": "",
+      "r": 2,
+      "def": "lunar",
+      "img": [],
+      "snd": [],
+      "e": [
+        "iz.",
+        "anat.",
+        "batua"
+      ]
+    },
+    {
+      "k": "Epel","ref": "orban",
+      "r": 2,
+      "def": "lunar",
+      "img": [],
+      "snd": [],
+      "e": [
+        "iz.",
+        "anat.",
+        "bizk."
+      ]
+    },
+    {
+      "k": "zimur","ref": "",
+      "r": 2,
+      "def": "arruga",
+      "img": [],
+      "snd": [],
+      "e": [
+        "iz.",
+        "anat.",
+        "batua"
+      ]
+    },
+    {
+      "k": "izurtu","ref": "zimur",
+      "r": 2,
+      "def": "arruga",
+      "img": [],
+      "snd": [],
+      "e": [
+        "iz.",
+        "anat.",
+        "gip."
+      ]
+    },
+    {
+      "k": "garatxo","ref": "",
+      "r": 2,
+      "def": "verruga",
+      "img": [],
+      "snd": [],
+      "e": [
+        "iz.",
+        "anat.",
+        "batua"
+      ]
+    },
+    {
+      "k": "kailu","ref": "",
+      "r": 2,
+      "def": "callo",
+      "img": [],
+      "snd": [],
+      "e": [
+        "iz.",
+        "anat.",
+        "batua"
+      ]
+    },
+    {
+      "k": "besakar","ref": "",
+      "r": 2,
+      "def": "vello (brazos/piernas)",
+      "img": [],
+      "snd": [],
+      "e": [
+        "iz.",
+        "anat.",
+        "batua"
+      ]
+    },
+    {
+      "k": "bizar","ref": "",
+      "r": 2,
+      "def": "barba",
+      "img": [],
+      "snd": [],
+      "e": [
+        "iz.",
+        "anat.",
+        "batua"
+      ]
+    },
+    {
+      "k": "parta","ref": "bizar",
+      "r": 2,
+      "def": "barba",
+      "img": [],
+      "snd": [],
+      "e": [
+        "iz.",
+        "anat.",
+        "ipar."
+      ]
+    },
+    {
+      "k": "bibote","ref": "",
+      "r": 2,
+      "def": "bigote",
+      "img": [],
+      "snd": [],
+      "e": [
+        "iz.",
+        "anat.",
+        "batua"
+      ]
+    },
+    {
+      "k": "mustatxa","ref": "bibote",
+      "r": 2,
+      "def": "bigote",
+      "img": [],
+      "snd": [],
+      "e": [
+        "iz.",
+        "anat.",
+        "ipar."
+      ]
+    },
+    {
+      "k": "estalki","ref": "",
+      "r": 2,
+      "def": "vello / vellosidad",
+      "img": [],
+      "snd": [],
+      "e": [
+        "iz.",
+        "anat.",
+        "batua"
+      ]
+    },
+    {
+      "k": "buru-hezur","ref": "",
+      "r": 3,
+      "def": "cráneo",
+      "img": [],
+      "snd": [],
+      "e": [
+        "iz.",
+        "anat.",
+        "batua"
+      ]
+    },
+    {
+      "k": "kaskezur","ref": "buru-hezur",
+      "r": 3,
+      "def": "cráneo",
+      "img": [],
+      "snd": [],
+      "e": [
+        "iz.",
+        "anat.",
+        "gip."
+      ]
+    },
+    {
+      "k": "izterrezur","ref": "",
+      "r": 3,
+      "def": "fémur",
+      "img": [],
+      "snd": [],
+      "e": [
+        "iz.",
+        "anat.",
+        "batua"
+      ]
+    },
+    {
+      "k": "bertebra","ref": "",
+      "r": 3,
+      "def": "vértebra",
+      "img": [],
+      "snd": [],
+      "e": [
+        "iz.",
+        "anat.",
+        "batua"
+      ]
+    },
+    {
+      "k": "ornu","ref": "bertebra",
+      "r": 3,
+      "def": "vértebra",
+      "img": [],
+      "snd": [],
+      "e": [
+        "iz.",
+        "anat.",
+        "bizk."
+      ]
+    },
+    {
+      "k": "pelbis-hezur","ref": "",
+      "r": 3,
+      "def": "pelvis / hueso pélvico",
+      "img": [],
+      "snd": [],
+      "e": [
+        "iz.",
+        "anat.",
+        "batua"
+      ]
+    },
+    {
+      "k": "omoplato","ref": "",
+      "r": 3,
+      "def": "omóplato",
+      "img": [],
+      "snd": [],
+      "e": [
+        "iz.",
+        "anat.",
+        "batua"
+      ]
+    },
+    {
+      "k": "eskapula","ref": "",
+      "r": 3,
+      "def": "escápula",
+      "img": [],
+      "snd": [],
+      "e": [
+        "iz.",
+        "anat.",
+        "batua"
+      ]
+    },
+    {
+      "k": "erradio","ref": "",
+      "r": 3,
+      "def": "radio",
+      "img": [],
+      "snd": [],
+      "e": [
+        "iz.",
+        "anat.",
+        "batua"
+      ]
+    },
+    {
+      "k": "ulna","ref": "",
+      "r": 3,
+      "def": "cúbito",
+      "img": [],
+      "snd": [],
+      "e": [
+        "iz.",
+        "anat.",
+        "batua"
+      ]
+    },
+    {
+      "k": "tibia","ref": "",
+      "r": 3,
+      "def": "tibia",
+      "img": [],
+      "snd": [],
+      "e": [
+        "iz.",
+        "anat.",
+        "batua"
+      ]
+    },
+    {
+      "k": "perone","ref": "",
+      "r": 3,
+      "def": "peroné",
+      "img": [],
+      "snd": [],
+      "e": [
+        "iz.",
+        "anat.",
+        "batua"
+      ]
+    },
+    {
+      "k": "lotailu","ref": "",
+      "r": 3,
+      "def": "ligamento",
+      "img": [],
+      "snd": [],
+      "e": [
+        "iz.",
+        "anat.",
+        "batua"
+      ]
+    },
+    {
+      "k": "kartilago","ref": "",
+      "r": 3,
+      "def": "cartílago",
+      "img": [],
+      "snd": [],
+      "e": [
+        "iz.",
+        "anat.",
+        "batua"
+      ]
+    },
+    {
+      "k": "hatz lodia","ref": "",
+      "r": 2,
+      "def": "pulgar",
+      "img": [],
+      "snd": [],
+      "e": [
+        "iz.",
+        "anat.",
+        "batua"
+      ]
+    },
+    {
+      "k": "poliz","ref": "hatz lodia",
+      "r": 2,
+      "def": "pulgar",
+      "img": [],
+      "snd": [],
+      "e": [
+        "iz.",
+        "anat.",
+        "bizk."
+      ]
+    },
+    {
+      "k": "erakusle","ref": "",
+      "r": 2,
+      "def": "índice",
+      "img": [],
+      "snd": [],
+      "e": [
+        "iz.",
+        "anat.",
+        "batua"
+      ]
+    },
+    {
+      "k": "erakusle-hatz","ref": "erakusle",
+      "r": 2,
+      "def": "índice",
+      "img": [],
+      "snd": [],
+      "e": [
+        "iz.",
+        "anat.",
+        "gip."
+      ]
+    },
+    {
+      "k": "erdiko hatz","ref": "",
+      "r": 2,
+      "def": "dedo corazón / medio",
+      "img": [],
+      "snd": [],
+      "e": [
+        "iz.",
+        "anat.",
+        "batua"
+      ]
+    },
+    {
+      "k": "hatz nagusi","ref": "erdiko hatz",
+      "r": 2,
+      "def": "dedo corazón",
+      "img": [],
+      "snd": [],
+      "e": [
+        "iz.",
+        "anat.",
+        "bizk."
+      ]
+    },
+    {
+      "k": "eraztun-hatz","ref": "",
+      "r": 2,
+      "def": "anular",
+      "img": [],
+      "snd": [],
+      "e": [
+        "iz.",
+        "anat.",
+        "batua"
+      ]
+    },
+    {
+      "k": "hatz txiki","ref": "",
+      "r": 2,
+      "def": "meñique",
+      "img": [],
+      "snd": [],
+      "e": [
+        "iz.",
+        "anat.",
+        "batua"
+      ]
+    },
+    {
+      "k": "txitxikolin","ref": "hatz txiki",
+      "r": 2,
+      "def": "meñique",
+      "img": [],
+      "snd": [],
+      "e": [
+        "iz.",
+        "anat.",
+        "lagun.",
+        "bizk."
+      ]
+    },
+    {
+      "k": "ugalketa-aparatu","ref": "",
+      "r": 2,
+      "def": "aparato reproductor",
+      "img": [],
+      "snd": [],
+      "e": [
+        "iz.",
+        "anat.",
+        "batua"
+      ]
+    },
+    {
+      "k": "paxu",
+      "r": 2,
+      "def": "aparato reproductor",
+      "img": [],
+      "snd": [],
+      "e": [
+        "iz.",
+        "anat.",
+        "bizk."
+      ],
+      "ref": "ugalketa-aparatu"
+    },
+    {
+      "k": "umetoki",
+      "r": 2,
+      "def": "útero / matriz",
+      "img": [],
+      "snd": [],
+      "e": [
+        "iz.",
+        "anat.",
+        "batua"
+      ],
+      "ref": ""
+    },
+    {
+      "k": "amezulo",
+      "r": 2,
+      "def": "matriz",
+      "img": [],
+      "snd": [],
+      "e": [
+        "iz.",
+        "anat.",
+        "bizk."
+      ],
+      "ref": "umetoki"
+    },
+    {
+      "k": "barrabil",
+      "r": 2,
+      "def": "testículo",
+      "img": [],
+      "snd": [],
+      "e": [
+        "iz.",
+        "anat.",
+        "batua"
+      ],
+      "ref": ""
+    },
+    {
+      "k": "potra",
+      "r": 2,
+      "def": "testículo",
+      "img": [],
+      "snd": [],
+      "e": [
+        "iz.",
+        "anat.",
+        "lagun.",
+        "bizk."
+      ],
+      "ref": "barrabil"
+    },
+    {
+      "k": "obulutegi",
+      "r": 2,
+      "def": "ovario",
+      "img": [],
+      "snd": [],
+      "e": [
+        "iz.",
+        "anat.",
+        "batua"
+      ],
+      "ref": ""
+    },
+    {
+      "k": "zakil",
+      "r": 2,
+      "def": "pene",
+      "img": [],
+      "snd": [],
+      "e": [
+        "iz.",
+        "anat.",
+        "batua"
+      ],
+      "ref": ""
+    },
+    {
+      "k": "bulba",
+      "r": 2,
+      "def": "vulva",
+      "img": [],
+      "snd": [],
+      "e": [
+        "iz.",
+        "anat.",
+        "batua"
+      ],
+      "ref": ""
+    },
+    {
+      "k": "bagina",
+      "r": 2,
+      "def": "vagina",
+      "img": [],
+      "snd": [],
+      "e": [
+        "iz.",
+        "anat.",
+        "batua"
+      ],
+      "ref": ""
+    },
+    {
+      "k": "esperma",
+      "r": 2,
+      "def": "esperma",
+      "img": [],
+      "snd": [],
+      "e": [
+        "iz.",
+        "anat.",
+        "batua"
+      ],
+      "ref": ""
+    },
+    {
+      "k": "obulu",
+      "r": 2,
+      "def": "óvulo",
+      "img": [],
+      "snd": [],
+      "e": [
+        "iz.",
+        "anat.",
+        "batua"
+      ],
+      "ref": ""
+    }
+  ]
+}
