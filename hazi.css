@@ -178,7 +178,7 @@ body {
     min-width: 100dvw;
     max-width: 100dvh;
     user-select: none;
-    grid-template-rows: repeat(10,minmax(0, 1fr));
+    grid-template-rows: repeat(10, minmax(0, 1fr));
     grid-template-columns: repeat(6, minmax(0, 1fr));
     grid-template-areas:
         "titulo titulo . . . menu"
@@ -191,6 +191,20 @@ body {
         ". . . . . ."
         "dificultad dificultad dificultad dificultad dificultad dificultad"
         "comenzar comenzar comenzar comenzar comenzar comenzar";
+}
+
+#capa-principal.zona-juego {
+    grid-template-areas:
+        "vidas vidas puntos puntos . racha"
+        "barra barra barra barra barra barra"
+        "pregunta pregunta pregunta pregunta pregunta pregunta"
+        "pregunta pregunta pregunta pregunta pregunta pregunta"
+        "pregunta pregunta pregunta pregunta pregunta pregunta"
+        "opciones opciones opciones opciones opciones opciones"
+        "opciones opciones opciones opciones opciones opciones"
+        "opciones opciones opciones opciones opciones opciones"
+       "opciones opciones opciones opciones opciones opciones"
+       "opciones opciones opciones opciones opciones opciones";
 }
 
 @media screen and (hover: hover) and (pointer: fine) {
@@ -365,4 +379,43 @@ body {
 #capa-principal .temario .tema.seleccionado .icono {
     filter: grayscale(0);
     /* Se ilumina el color del icono */
+}
+
+.vidas {
+    grid-area: vidas;
+}
+
+.racha {
+    grid-area: racha;
+    color: #00ffcc;
+    font-family: 'Consolas', monospace;
+    font-size: 1.1rem;
+    text-shadow: 0 0 8px #00ffcc44;
+}
+.puntos{
+    grid-area: puntos;
+    color: yellow;
+}
+.barra-ext {
+    grid-area: barra;
+    width: 100%;
+    height: 6px;
+    background: #222;
+    border-radius: 3px;
+    margin: 15px 0;
+    overflow: hidden;
+}
+.barra-int{
+    height: 100%;
+    background: #00ffcc;
+    box-shadow: 0 0 10px #00ffcc;
+    transition: width 0.1s linear;
+    width : 30%;
+}
+.pregunta{
+    grid-area: pregunta;
+
+}
+.opciones{
+    grid-area: opciones;
 }

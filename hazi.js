@@ -20,6 +20,11 @@ class Hazi {
                 this.nivel = 1;
                 this.modoPregunta = "img-txt-audio";
                 this.modoRespuesta = "txt";
+                this.rachiobjetivo = 5;
+                this.puntos=0;
+                this.temporizador = null;
+                this.marca = 0;
+                this.vidas = 3;
         }
         t(clave) {
                 return this.bla[clave] || clave;
@@ -100,17 +105,17 @@ class Hazi {
         async iniciarApp(urlCatalogo) {
                 // 1. Iniciamos la bitácora con el nombre del motor
                 this.bitacora(`<b>Hazi</b>: ${this.t('Iniciando-app')}`, 10);
-                await this.esperar(500)
+                await this.esperar(150);
                 try {
                         // -A: tareas de inicio
 
                         this.bitacora(`${this.t('abriendo-bd')} ...`, 30);
                         await this.abrirBaseDatos();
-                        await this.esperar(2000);
+                        await this.esperar(500);
 
 
                         this.bitacora(`${this.t('descargando-catalogo')} ...`, 50);
-                        const [respuesta] = await Promise.all([fetch(urlCatalogo), this.esperar(1500)]);
+                        const [respuesta] = await Promise.all([fetch(urlCatalogo), this.esperar(500)]);
                         if (!respuesta.ok) throw new Error(`${this.t('critico')}: ${this.t('error-catalogo')}`);
                         const catalogo = await respuesta.json();
 
@@ -258,7 +263,61 @@ class Hazi {
                 const url = this.crearUrlDeImagenWiki(item.img[aleatorio], width);
                 return ` <img src="${url}" alt="${item.k}" loading="eager" title="${item.k}">`;
         }
+        comenzarPartida(){
+               const tablero = document.querySelector("#capa-principal");
+               tablero.classList.add("zona-juego");
+                tablero.innerHTML  = `
+               <div class="vidas">${"❤️".repeat(this.vidas)}</div>
+               <div class="racha"> 0 / ${this.rachiobjetivo}</div>
+               <div class="barra-ext"><div class="barra-int" style="width: 100%;"></div></div>
+               <div class="puntos">0</div>
+               <div class="pregunta"></div>
+               <div class="opciones"></div>
+               `;
+               this.generarPregunta();
+        }
+        generarPregunta(){
+                if(this.temporizador){
+                        clearInterval (this.temporizador);
+                        this.temporizador = null;
+                }
+                this.generarOpciones()
+        }
+        generarOpciones(){
+                this.iniciarTemporizador();
+        }
+        iniciarTemporizador(){
+                if(this.temporizador) clearInterval(this.temporizador);
 
+                const interna = document.querySelector(".barra-int");
+                const externa = document.querySelector(".barra-ext");
+                if(!interna || !externa) return;
+
+                interna.className = "barra-int verde";
+                externa.classList.remove('rojo');
+
+                const total = this.tiempoBase * 1000; // en ms
+                this.marca = Date.now(); // en ms
+                this.temporizador = setInterval(()=>{
+                        const transcurrido = Date.now() - this.marca;
+                        const porcentaje = Math.max(0, 100 - (transcurrido / total * 100));
+                        interna.style.width = `${porcentaje}%`;
+                        if(transcurrido >= total){
+                                clearInterval(this.temporizador);
+                                this.temporizador = null;
+                                this.comprobarRespuesta(null); 
+                        }
+
+                }, 100);
+
+        }
+        comprobarRespuesta(resp){
+                if(this.temporizador){
+                        clearInterval(this.temporizador);
+                        this.temporizador = null;
+                }
+                const reaccion = resp ? (Date.now() - this.marca) : (this.tiempoBase * 1000);
+        }
 
 }
 
