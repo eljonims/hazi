@@ -1,4 +1,14 @@
 class Hazi {
+        static #PERFIL_POR_DEFECTO = {
+                id: "perfil",
+                usuario: { nombre: "invitado" },
+                partida: {
+                        dificultad: 1, categorias: [], modoPregunta: "img-txt-audio",
+                        modoRespuesta: "txt", temas: new Set()
+                },
+                interfaz: { idioma: "es", sonido: true },
+                estado: { tutorialVisto: false, totalPartidas: 0, ultimaConexion: Date.now(), versionApp: "1.0.0" }
+        }
         constructor() {
                 this.bla = { // desvincula el texto literal en el html. se recupera con el método this.t(clave) 
                         'Iniciando-app': "iniciando sistema.",
@@ -13,23 +23,17 @@ class Hazi {
                         "nvl-2": "Medio",
                         "nvl-3": 'Experto',
                         'btn-comenzar': 'comenzar',
+                        'recuperando-perfil': 'recuperando perfil',
                 };
+                this.perfil = null;
+                this.rt = null;
+
                 this.bd = null;
-                this.temas = new Set();
-                this.vocabulario = [];
-                this.nivel = 1;
-                this.modoPregunta = "img-txt-audio";
-                this.modoRespuesta = "txt";
-                this.rachiobjetivo = 5;
-                this.puntos=0;
-                this.temporizador = null;
-                this.marca = 0;
-                this.vidas = 3;
+
         }
         t(clave) {
                 return this.bla[clave] || clave;
         }
-        lanzar() { }
         establecerEventos() {
                 document.addEventListener('click', (evento) => {//Delegación de eventos al click
                         const target = evento.target.closest('[data-action]');
@@ -53,6 +57,10 @@ class Hazi {
                                         this.comenzarPartida();
                                         break;
                                 }
+                                case "frenar-ruleta": {
+                                        this.#frenarRuleta();
+                                        break;
+                                }
 
                                 default:
                                         console.warn(`data-action="${action}" no contemplado en la delegación`)
@@ -61,14 +69,14 @@ class Hazi {
                 });
 
         }
-        cambiarDificultad(elemento, nivel) {
-                this.nivel = nivel; // "1", "2", o "3"
+        cambiarDificultad(elemento, dificultad) {
+                this.perfil.partida.dificultad = Number(dificultad); // "1", "2", o "3"
                 document.querySelector('.nivel.seleccionado')?.classList.remove('seleccionado');
                 elemento.classList.add('seleccionado');
         }
         seleccionarTema(elemento, t) {
                 elemento.classList.toggle('seleccionado');
-                this.temas.has(t) ? this.temas.delete(t) : this.temas.add(t);
+                this.perfil.partida.temas.has(t) ? this.perfil.partida.temas.delete(t) : this.perfil.partida.temas.add(t);
         }
         notificarActualizacion(reg) {
                 const aviso = document.createElement('div');
@@ -99,31 +107,32 @@ class Hazi {
                 }
                 if (barra && porcentaje !== undefined) barra.style.width = `${porcentaje}%`;
         }
-        esperar(ms) {
-                return new Promise(res => setTimeout(res, ms));
-        }
+
         async iniciarApp(urlCatalogo) {
                 // 1. Iniciamos la bitácora con el nombre del motor
                 this.bitacora(`<b>Hazi</b>: ${this.t('Iniciando-app')}`, 10);
-                await this.esperar(150);
+                await this.#esperar(150);
                 try {
                         // -A: tareas de inicio
 
                         this.bitacora(`${this.t('abriendo-bd')} ...`, 30);
-                        await this.abrirBaseDatos();
-                        await this.esperar(500);
+                        await Promise.all([this.#abrirBaseDatos(), this.#esperar(300)]);
+
+                        this.bitacora(`${this.t('recuperando-perfil')} ...`, 40);
+                        const [guardado] = await Promise.all([this.#recuperar("ajustes", "perfil"), this.#esperar(300)]);
+                        this.perfil = guardado ?? structuredClone(Hazi.#PERFIL_POR_DEFECTO);
 
 
                         this.bitacora(`${this.t('descargando-catalogo')} ...`, 50);
-                        const [respuesta] = await Promise.all([fetch(urlCatalogo), this.esperar(500)]);
+                        const [respuesta] = await Promise.all([fetch(urlCatalogo), this.#esperar(300)]);
                         if (!respuesta.ok) throw new Error(`${this.t('critico')}: ${this.t('error-catalogo')}`);
-                        const catalogo = await respuesta.json();
+                        this.catalogo = await respuesta.json();
 
 
                         // -B: llenado de barra y mensaje listo
 
                         this.bitacora(`${this.t('carga-finalizada')}`, 100);
-                        await this.esperar(400);
+                        await this.#esperar(500);
 
                         // -C: transición de desvanecimiento de la capa de carga hacia la app
 
@@ -135,7 +144,7 @@ class Hazi {
                                 bitacora.remove();
                                 principal.classList.remove('oculto');
                                 this.establecerEventos();
-                                this.mostrarConfiguracionPartida(catalogo);
+                                this.mostrarConfiguracionPartida();
 
                         };
                         bitacora.addEventListener('transitionend', transicionar, { once: true });
@@ -156,40 +165,14 @@ class Hazi {
                         this.bitacora(`${this.t('critico')}: ${error.message || error}`, 100);
                 }
         }
-        abrirBaseDatos() {
-                return new Promise((resolver, rechazar) => {
-                        // Abrimos la base de datos (Versión 1)
-                        const peticion = indexedDB.open("hazi_DB", 1);
 
-                        // Solo ocurre la primera vez: Definimos el diseño de los compartimentos
-                        peticion.onupgradeneeded = (e) => {
-                                const bd = e.target.result;
+        mostrarConfiguracionPartida() {
 
-                                if (!bd.objectStoreNames.contains("records")) {
-                                        bd.createObjectStore("records", { keyPath: "id" });
-                                }
-                                if (!bd.objectStoreNames.contains("lexico")) {
-                                        bd.createObjectStore("lexico", { keyPath: "id" });
-                                }
-                                if (!bd.objectStoreNames.contains("ajustes")) {
-                                        bd.createObjectStore("ajustes", { keyPath: "id" });
-                                }
-                        };
-
-                        peticion.onsuccess = (e) => {
-                                this.bd = e.target.result;
-                                resolver();
-                        };
-
-                        peticion.onerror = () => rechazar(`${this.t('critico')}: ${this.t("error-bd")}`);
-                });
-        }
-        mostrarConfiguracionPartida(catalogo) {
-
-                this.temas.clear();
+                this.perfil.partida.temas.clear();
                 this.nivel = 1;
 
                 const cuerpo = document.getElementById('capa-principal');
+                cuerpo.className="";
                 cuerpo.innerHTML = "";
                 const titulo = '<div class="titulo-app">Hazi</div>';
                 const menu = '<div class="menu" data-action="abrir-menu">☰</div>'
@@ -212,13 +195,13 @@ class Hazi {
                 `;
 
                 let temario = '<div class="temario">';
-                catalogo.forEach(tema => {
+                this.catalogo.forEach(tema => {
                         temario += `
                         <div    class="tema seleccionado"  data-action="seleccionar-tema" data-id="${tema.id}">
                                 <span class="titulo">${tema.titulo}</span>
                                 <span class="icono">🌱</span>
                         </div>`;
-                        this.temas.add(tema.id);
+                        this.perfil.partida.temas.add(tema.id);
                 });
                 temario += '</div>';
                 cuerpo.innerHTML = titulo + menu + temario + dificultades + comenzar;
@@ -258,164 +241,387 @@ class Hazi {
                 // Estructura: base + ruta/del/hash + / + ancho + px- + nombre_para_miniatura
                 return `${baseUrl}${imgPath}/${width}px-${thumbName}`;
         }
-        crearElementoImg(item, width = 300){
+        crearElementoImg(item, width = 300) {
                 const aleatorio = Math.floor(Math.ramdom() * item.img.length);
                 const url = this.crearUrlDeImagenWiki(item.img[aleatorio], width);
                 return ` <img src="${url}" alt="${item.k}" loading="eager" title="${item.k}">`;
         }
-        comenzarPartida(){
-               const tablero = document.querySelector("#capa-principal");
-               tablero.classList.add("zona-juego");
-                tablero.innerHTML  = `
-               <div class="vidas">${"❤️".repeat(this.vidas)}</div>
-               <div class="racha"> 0 / ${this.rachiobjetivo}</div>
+        async comenzarPartida() {
+                await this.#guardar("ajustes", this.perfil);
+                this.rt = {
+                        dificultad: this.perfil.partida.dificultad,
+                        vidas: 6 - this.perfil.partida.dificultad,
+                        puntos: 0,
+                        rachas: 0,
+                        tiempoCongelado: false,
+                        temporizador: null,
+                        marca: 0,
+                        rachiObjetivo: 5,
+                        rachiObjetivoBASE: 5,
+                        rachiMarcador: 0,
+
+                        tiempoBase: 10,
+                        respuesta: null,
+                        respuestaEsperada: null,
+                        tiempoReaccion: null,
+                        ruleta: {
+                                temporizador: null,
+                                y: 0,
+                                premios: [
+                                        { id: 'bizia', t: '❤️ BIZIA (+1)', c: '#00ff88' },
+                                        { id: 'izoztuta', t: '❄️ IZOZTUTA', c: '#00ccff' },
+                                        { id: 'infernua', t: '🔥 INFERNUA', c: '#ff4400', m: true },
+                                        { id: 'marea', t: '🌪️ MAREA', c: '#ff00cc' },
+                                        { id: 'laster', t: '⚡ LASTER', c: '#ffff00' }
+                                ]
+                        }
+
+                };
+
+                this.generarPregunta();
+        }
+        generarPregunta() {
+                this.#detenerBarraTiempo();
+                this.rt.respuesta = null;
+                this.rt.respuestaEsperada = null;
+                // ... 
+
+
+                this.generarOpciones();
+                this.#regenerarEscenario();
+                this.iniciarTemporizador();
+                this.#interaccion(true);
+        }
+        #regenerarEscenario() {
+                const tablero = document.querySelector("#capa-principal");
+                tablero.classList.add("zona-juego");
+                tablero.innerHTML = `
+               <div class="vidas">${"❤️".repeat(this.rt.vidas)}</div>
+               <div class="racha"> ${this.rt.rachiMarcador} / ${this.rt.rachiObjetivo}</div>
                <div class="barra-ext"><div class="barra-int" style="width: 100%;"></div></div>
-               <div class="puntos">0</div>
+               <div class="puntos">${this.rt.puntos}</div>
                <div class="pregunta"></div>
                <div class="opciones"></div>
                `;
-               this.generarPregunta();
         }
-        generarPregunta(){
-                if(this.temporizador){
-                        clearInterval (this.temporizador);
-                        this.temporizador = null;
-                }
-                this.generarOpciones()
-        }
-        generarOpciones(){
-                this.iniciarTemporizador();
-        }
-        iniciarTemporizador(){
-                if(this.temporizador) clearInterval(this.temporizador);
+        generarOpciones() { }
+        iniciarTemporizador() {
+                this.#detenerBarraTiempo();
 
                 const interna = document.querySelector(".barra-int");
                 const externa = document.querySelector(".barra-ext");
-                if(!interna || !externa) return;
+                if (!interna || !externa) return;
 
                 interna.className = "barra-int verde";
                 externa.classList.remove('rojo');
 
-                const total = this.tiempoBase * 1000; // en ms
-                this.marca = Date.now(); // en ms
-                this.temporizador = setInterval(()=>{
-                        const transcurrido = Date.now() - this.marca;
-                        const porcentaje = Math.max(0, 100 - (transcurrido / total * 100));
-                        interna.style.width = `${porcentaje}%`;
-                        if(transcurrido >= total){
-                                clearInterval(this.temporizador);
-                                this.temporizador = null;
-                                this.comprobarRespuesta(null); 
+                const total = this.rt.tiempoBase * 1000; // en ms
+                this.rt.marca = Date.now(); // en ms
+                this.rt.temporizador = setInterval(() => {
+                        this.rt.tiempoReaccion = Date.now() - this.rt.marca;
+                        const porcentaje = Math.max(0, 100 - (this.rt.tiempoReaccion / total * 100));
+                        if (!this.rt.tiempoCongelado) {
+                                interna.style.width = `${porcentaje}%`;
+                                if (this.rt.tiempoReaccion >= total) {
+                                        this.rt.tiempoReaccion = this.rt.tiempoBase * 1000;
+                                        this.comprobarRespuesta();
+                                }
                         }
 
                 }, 100);
 
         }
-        comprobarRespuesta(resp){
-                if(this.temporizador){
-                        clearInterval(this.temporizador);
-                        this.temporizador = null;
+        comprobarRespuesta() {
+                this.#detenerBarraTiempo();
+                this.#interaccion(false);
+                this.#evaluarRespuesta();
+
+                this.rt.respuestaEsperada = "";
+                if (this.rt.respuesta === this.rt.respuestaEsperada) {
+                        this.#gestionarAcierto();
+
+                } else {
+                        this.#gestionarFallo();
                 }
-                const reaccion = resp ? (Date.now() - this.marca) : (this.tiempoBase * 1000);
+        }
+        #lanzarRuleta() {
+
+                const capa = document.querySelector("#capa-principal");
+                let htmlPremios = "";
+                for (let i = 0; i < 30; i++) {
+                        const p = this.rt.ruleta.premios[i % this.rt.ruleta.premios.length];
+                        htmlPremios += `<div class="item-premio ${p.m ? 'maldito' : ''}">${p.t}</div>`;
+                }
+                capa.innerHTML = `
+                <div class="capa-ruleta-sistema">
+                    <div class="visor-ruleta">
+                        <div id="tira-premios" class="tira-premios" style="transform: translateY(0px);">${htmlPremios}</div>
+                    </div>
+                    <button class="boton-disparador-juego-neon" id="btn-frenar-ruleta" data-action="frenar-ruleta" style="margin-top: 40px">
+                        GELDI! / ¡PARAR!
+                    </button>
+                </div>`;
+                this.rt.ruleta.y = 0;
+                const tira = document.querySelector("#tira-premios");
+                this.rt.ruleta.temporizador = setInterval(() => {
+                        this.rt.ruleta.y -= 40;
+                        if (Math.abs(this.rt.ruleta.y) > (this.rt.ruleta.premios.length * 120 * 4 - 40)) {
+                                this.rt.ruleta.y = 0;
+                        }
+                        tira.style.transform = `translateY(${this.rt.ruleta.y}px)`;
+                }, 30);
+        }
+        #frenarRuleta() {
+                clearInterval(this.rt.ruleta.temporizador);
+                const tira = document.getElementById('tira-premios');
+                const btn = document.getElementById('btn-frenar-ruleta');
+                if (btn) btn.style.display = 'none';
+
+                // A. CAPTURAR POSICIÓN EXACTA (Evita saltos visuales)
+                // Obtenemos dónde está la tira justo en este milisegundo
+                const estiloComputado = window.getComputedStyle(tira);
+                const matrix = new WebKitCSSMatrix(estiloComputado.transform);
+                const posicionActualY = matrix.m42; // Captura el valor real de translateY
+
+                // B. SINCRONIZACIÓN
+                // Fijamos la posición actual sin transición para "congelar" el movimiento
+                tira.style.transition = "none";
+                tira.style.transform = `translateY(${posicionActualY}px)`;
+
+                // C. CÁLCULO DE DESTINO (Mantenemos tu lógica de itemsExtra)
+                const itemsExtra = Math.floor(Math.random() * 4) + 8;
+                // Forzamos que el destino sea un múltiplo exacto de 120 para que quede centrado
+                const destinoFinalY = Math.round((posicionActualY - (itemsExtra * 120)) / 120) * 120;
+
+                // D. EJECUCIÓN (Usamos un pequeño delay para que el navegador registre el cambio de 'none' a 'cubic-bezier')
+                setTimeout(() => {
+                        tira.style.transition = "transform 2.5s cubic-bezier(0.1, 0.9, 0.2, 1)";
+                        tira.style.transform = `translateY(${destinoFinalY}px)`;
+                }, 20);
+
+                // E. IDENTIFICAR PREMIO
+                // Usamos el destinoFinalY para saber qué premio quedará bajo el visor
+                const totalItemsPasados = Math.round(Math.abs(destinoFinalY) / 120);
+                const indiceReal = totalItemsPasados % this.rt.ruleta.premios.length;
+                const premio = this.rt.ruleta.premios[indiceReal];
+
+                setTimeout(() => {
+                        this.#aplicarPremio(premio);
+                }, 2600); // 100ms después de que termine la transición de 2.5s
         }
 
+        #aplicarPremio() {
+                this.generarPregunta()
+        }
+        #interaccion(permitida) { }
+        #evaluarRespuesta() { }
+        #gestionarAcierto() {
+                this.#progresarEnLaRacha();
+        }
+        #progresarEnLaRacha() {
+                this.rt.rachiMarcador++;
+                if (this.rt.rachiMarcador == this.rt.rachiObjetivo) {
+                        this.#completarRacha();
+                } else {
+
+                        this.generarPregunta();
+                }
+        }
+        #completarRacha() {
+                this.rt.rachas++;
+                this.rt.rachiMarcador = 0;
+
+                if (this.rt.rachas % 3 == 0 && this.rt.rachiObjetivo < 10) {
+                        this.rt.rachiObjetivo++;
+                        // resaltar el incremento en la interfaz mediante latido 
+                }
+                this.#lanzarRuleta();
+        }
+        #gestionarFallo() {
+                this.rt.vidas--;
+                this.rt.rachiMarcador = 0;
+                if (this.rt.vidas <= 0) {
+                        this.#finalizarPartida();
+                } else {
+                        setTimeout(() => this.generarPregunta(), 1200);
+                }
+        }
+        #finalizarPartida() {
+                this.#generarResumen();
+        }
+        #generarResumen() { 
+                this.mostrarConfiguracionPartida();
+        }
+        #esperar(ms) {
+                return new Promise(res => setTimeout(res, ms));
+        }
+        #abrirBaseDatos() {
+                return new Promise((resolver, rechazar) => {
+                        // Abrimos la base de datos (Versión 1)
+                        const peticion = indexedDB.open("hazi_DB", 1);
+
+                        // Solo ocurre la primera vez: Definimos el diseño de los compartimentos
+                        peticion.onupgradeneeded = (e) => {
+                                const bd = e.target.result;
+
+                                if (!bd.objectStoreNames.contains("records")) {
+                                        bd.createObjectStore("records", { keyPath: "id" });
+                                }
+                                if (!bd.objectStoreNames.contains("lexico")) {
+                                        bd.createObjectStore("lexico", { keyPath: "id" });
+                                }
+                                if (!bd.objectStoreNames.contains("ajustes")) {
+                                        bd.createObjectStore("ajustes", { keyPath: "id" });
+                                }
+                        };
+
+                        peticion.onsuccess = (e) => {
+                                this.bd = e.target.result;
+                                resolver();
+                        };
+
+                        peticion.onerror = () => rechazar(`${this.t('critico')}: ${this.t("error-bd")}`);
+                });
+        }
+        #detenerBarraTiempo() {
+                if (this.rt.temporizador) {
+                        clearInterval(this.rt.temporizador);
+                        this.rt.temporizador = null;
+                }
+        }
+        async #recuperar(almacen, id) {
+                return new Promise((resolver, rechazar) => {
+                        const tx = this.bd.transaction(almacen, "readonly");
+                        const store = tx.objectStore(almacen);
+                        const peticion = store.get(id);
+
+                        peticion.onsuccess = () => resolver(peticion.result ?? null);
+                        peticion.onerror = () => rechazar(`Error al leer ${id} en ${almacen}`);
+                });
+        }
+        async #guardar(almacen, objeto) {
+                return new Promise((resolver, rechazar) => {
+                        const tx = this.bd.transaction(almacen, "readwrite");
+                        const store = tx.objectStore(almacen);
+
+                        store.put(objeto);
+
+                        // Esperamos al 'oncomplete' de la transacción para máxima seguridad
+                        tx.oncomplete = () => resolver(true);
+                        tx.onerror = () => rechazar(`Error al escribir en ${almacen}`);
+                });
+        }
+        async #eliminar(almacen, id) {
+                return new Promise((resolver, rechazar) => {
+                        const tx = this.bd.transaction(almacen, "readwrite");
+                        const store = tx.objectStore(almacen);
+                        const peticion = store.delete(id);
+
+                        peticion.onsuccess = () => resolver(true);
+                        tx.onerror = () => rechazar(`Error al borrar ${id} en ${almacen}`);
+                });
+        }
 }
 
-// --- REGISTRO DEL SERVICE WORKER (VIGILANTE) (PWA) ---
-/*
+
+
+{
+/* --- REGISTRO DEL SERVICE WORKER (VIGILANTE) (PWA) ---
+
         El navegador tiene una regla de hierro para las PWA: el archivo sw.js es el único que nunca 
         se fía de la caché al 100%. Funcionamiento técnico de esa "vigilancia":
-1.              La comprobación de 24 horas (o cada apertura)
+        1.              La comprobación de 24 horas (o cada apertura)
         Aunque La estrategia sea Cache First o Stale-While-Revalidate, 
         el navegador realiza una petición HTTP especial para el archivo sw.js:
         Al abrir la App: Cada vez que el usuario lanza HAZI, el navegador pregunta al servidor: 
         "¿Ha cambiado el sw.js?".
         En segundo plano: Si el usuario deja la App abierta mucho tiempo, el navegador lo comprueba 
         automáticamente cada 24 horas.
-2.              Comparación byte a bit
+        2.              Comparación byte a bit
         El navegador descarga el sw.js nuevo y lo compara con el que tiene instalado:
         Si son idénticos: No hace nada. El vigilante actual sigue al mando.
         Si hay un solo carácter diferente (por ejemplo, cambia v1 por v2): Se dispara 
         el evento updatefound.
-3.              El proceso de "Instalación en la sombra"
+        3.              El proceso de "Instalación en la sombra"
         Cuando detecta el cambio, sucede lo siguiente:
         - El nuevo sw.js se descarga y se ejecuta el evento install.
         - Se queda en espera (waiting): No mata al vigilante viejo mientras el usuario 
           está jugando para no romper la partida.
 
-El navegador es extremadamente desconfiado con este archivo. No se fía de la fecha ni de un 
-hash enviado por el servidor: lo descarga por completo y lo compara byte a byte.
-Proceso exacto que sigue el navegador cada vez que se abre HAZI:
-1. La Descarga Silenciosa
-Cuando se entra en la App, el navegador lanza una petición HTTP especial para el 
-archivo sw.js (el nombre puede ser otro, pero obligatoriamente debe estar en la raiz del proyecto). 
-Esta petición se salta la caché normal del navegador para ir directa a la fuente (github, por ejemplo).
-2. Comparación Binaria (Byte a Byte)
-Una vez descargado en una zona temporal de la memoria:
-El navegador pone el sw.js viejo (el que está funcionando ahora) al lado del nuevo que acaba de bajar.
-Los compara carácter a carácter.
-Si son idénticos: Borra el nuevo y el vigilante viejo sigue patrullando como si nada. No pasa nada.
-Si hay un solo cambio: (Incluso un espacio en blanco o un comentario nuevo), el navegador dice: 
-" ¡Alerta! Hay un nuevo vigilante".
-3. El estado "En Espera" (Waiting)
-En ese momento, el navegador instala el nuevo, pero no lo deja entrar. Lo deja en la puerta (waiting).
-Aquí es cuando este código detecta el evento updatefound y muestro el cartel neón de: "¡Nueva versión lista!".
+        El navegador es extremadamente desconfiado con este archivo. No se fía de la fecha ni de un 
+        hash enviado por el servidor: lo descarga por completo y lo compara byte a byte.
+        Proceso exacto que sigue el navegador cada vez que se abre HAZI:
+        1. La Descarga Silenciosa
+        Cuando se entra en la App, el navegador lanza una petición HTTP especial para el 
+        archivo sw.js (el nombre puede ser otro, pero obligatoriamente debe estar en la raiz del proyecto). 
+        Esta petición se salta la caché normal del navegador para ir directa a la fuente (github, por ejemplo).
+        2. Comparación Binaria (Byte a Byte)
+        Una vez descargado en una zona temporal de la memoria:
+        El navegador pone el sw.js viejo (el que está funcionando ahora) al lado del nuevo que acaba de bajar.
+        Los compara carácter a carácter.
+        Si son idénticos: Borra el nuevo y el vigilante viejo sigue patrullando como si nada. No pasa nada.
+        Si hay un solo cambio: (Incluso un espacio en blanco o un comentario nuevo), el navegador dice: 
+        " ¡Alerta! Hay un nuevo vigilante".
+        3. El estado "En Espera" (Waiting)
+        En ese momento, el navegador instala el nuevo, pero no lo deja entrar. Lo deja en la puerta (waiting).
+        Aquí es cuando este código detecta el evento updatefound y muestro el cartel neón de: "¡Nueva versión lista!".
 
 
-Si no existiera el botón de actualizar (es decir, si no se usara skipWaiting()), el Vigilante (Service Worker) 
-nuevo se quedaría en una fase de "limbo" técnico llamada Waiting (En espera). 
-Esto es lo que sucedería exactamente la próxima vez que el usuario interactúe con HAZI:
-1. El escenario de "Cerrar y Abrir"
-Si el usuario simplemente minimiza la App o la cierra y la vuelve a abrir rápido, no vería ningún cambio. 
-Por qué: El navegador mantiene vivo el Service Worker viejo mientras detecte que hay alguna pestaña o ventana de la App abierta (o en segundo plano).
-Consecuencia: El usuario seguiría jugando con la versión antigua, aunque exista el código nuevo en el repositorio fuente. 
+        Si no existiera el botón de actualizar (es decir, si no se usara skipWaiting()), el Vigilante (Service Worker) 
+        nuevo se quedaría en una fase de "limbo" técnico llamada Waiting (En espera). 
+        Esto es lo que sucedería exactamente la próxima vez que el usuario interactúe con HAZI:
+        1. El escenario de "Cerrar y Abrir"
+        Si el usuario simplemente minimiza la App o la cierra y la vuelve a abrir rápido, no vería ningún cambio. 
+        Por qué: El navegador mantiene vivo el Service Worker viejo mientras detecte que hay alguna pestaña o ventana de la App abierta (o en segundo plano).
+        Consecuencia: El usuario seguiría jugando con la versión antigua, aunque exista el código nuevo en el repositorio fuente. 
 
-2. ¿Cuándo se activaría por fin?
-La nueva versión solo tomaría el control cuando se cumpla la "Regla de las Cero Pestañas": 
+        2. ¿Cuándo se activaría por fin?
+        La nueva versión solo tomaría el control cuando se cumpla la "Regla de las Cero Pestañas": 
 
-El usuario debe cerrar todas las pestañas o instancias de la App.
-En móviles, a veces hace falta "matar" el proceso de la App (deslizarla hacia arriba en el selector de tareas).
-Al abrirla de nuevo tras ese cierre total, el navegador ve que ya no hay nadie al mando,
- descarta al viejo y activa al nuevo vigilante. 
+        El usuario debe cerrar todas las pestañas o instancias de la App.
+        En móviles, a veces hace falta "matar" el proceso de la App (deslizarla hacia arriba en el selector de tareas).
+        Al abrirla de nuevo tras ese cierre total, el navegador ve que ya no hay nadie al mando,
+        descarta al viejo y activa al nuevo vigilante. 
 
-3. El problema del "Refresco Infinito"
-Curiosamente, pulsar F5 o refrescar la página no sirve para actualizar el Service Worker por defecto. 
-Durante un segundo, mientras la página se refresca, el navegador mantiene ambas instancias en memoria para que la transición no sea brusca.
-Como nunca llega a haber "cero clientes", el nuevo vigilante nunca recibe el permiso para entrar. 
-
-
+        3. El problema del "Refresco Infinito"
+        Curiosamente, pulsar F5 o refrescar la página no sirve para actualizar el Service Worker por defecto. 
+        Durante un segundo, mientras la página se refresca, el navegador mantiene ambas instancias en memoria para que la transición no sea brusca.
+        Como nunca llega a haber "cero clientes", el nuevo vigilante nunca recibe el permiso para entrar. 
 
 
-El navegador es un coleccionista ordenado, pero no borra por impulsividad. La limpieza de los 
-vigilantes (Service Workers) y sus cachés depende totalmente de cómo hayas programado el evento activate.
-Aquí tienes las reglas de limpieza del "Averno" de los navegadores:
-
-1. ¿Cuándo se borra el VIGILANTE viejo? (El archivo sw.js o como sea que se llame)
-
-        - SÍ se borra automáticamente: 
-
-        Cuando todas las pestañas de HAZI se han cerrado y el nuevo vigilante toma el mando. 
-        El navegador detecta que el viejo ya no tiene "clientes" que proteger y lo fulmina de 
-        la memoria.
 
 
-        - NO se borra: 
-        
-        Mientras el usuario tenga la App abierta (aunque sea en segundo plano). 
-        El viejo sigue vivo "en el corredor de la muerte" hasta que la sesión muere o 
-        tú fuerzas el skipWaiting() con tu botón de actualizar.
+        El navegador es un coleccionista ordenado, pero no borra por impulsividad. La limpieza de los 
+        vigilantes (Service Workers) y sus cachés depende totalmente de cómo hayas programado el evento activate.
+        Aquí tienes las reglas de limpieza del "Averno" de los navegadores:
 
-2. ¿Cuándo se borra la CACHÉ vieja? (La maleta de archivos)
+        1. ¿Cuándo se borra el VIGILANTE viejo? (El archivo sw.js o como sea que se llame)
 
-        Aquí es donde la mayoría de desarrolladores fallan. 
-        El navegador NO borra la caché vieja por sí solo aunque el vigilante cambie.
-        Si cambias de v1 a v2: El navegador guardará AMBAS maletas en el disco duro del usuario.
-        El riesgo: Si no programas una limpieza, podrías llenar el móvil del usuario con gigas de versiones antiguas de HAZI.
-        La Solución: El "Protocolo de Limpieza" (en sw.js)
-        Para que el borrado sea realmente automático, se incluye esta lógica en el evento activate. 
-        Es el momento en que el nuevo vigilante dice: "Ahora mando yo, tirad la basura de los anteriores".
+                - SÍ se borra automáticamente: 
 
- */
+                Cuando todas las pestañas de HAZI se han cerrado y el nuevo vigilante toma el mando. 
+                El navegador detecta que el viejo ya no tiene "clientes" que proteger y lo fulmina de 
+                la memoria.
+
+
+                - NO se borra: 
+                
+                Mientras el usuario tenga la App abierta (aunque sea en segundo plano). 
+                El viejo sigue vivo "en el corredor de la muerte" hasta que la sesión muere o 
+                tú fuerzas el skipWaiting() con tu botón de actualizar.
+
+                2. ¿Cuándo se borra la CACHÉ vieja? (La maleta de archivos)
+
+                Aquí es donde la mayoría de desarrolladores fallan. 
+                El navegador NO borra la caché vieja por sí solo aunque el vigilante cambie.
+                Si cambias de v1 a v2: El navegador guardará AMBAS maletas en el disco duro del usuario.
+                El riesgo: Si no programas una limpieza, podrías llenar el móvil del usuario con gigas de versiones antiguas de HAZI.
+                La Solución: El "Protocolo de Limpieza" (en sw.js)
+                Para que el borrado sea realmente automático, se incluye esta lógica en el evento activate. 
+                Es el momento en que el nuevo vigilante dice: "Ahora mando yo, tirad la basura de los anteriores".
+
+ */}
+
 if ('serviceWorker' in navigator) {
         window.addEventListener('load', () => {
                 navigator.serviceWorker.register('./sw.js').then(reg => {
