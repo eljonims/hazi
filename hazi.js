@@ -336,7 +336,6 @@ class Hazi {
                 this.#interaccion(false);
                 this.#evaluarRespuesta();
 
-                this.rt.respuestaEsperada = "";
                 if (this.rt.respuesta === this.rt.respuestaEsperada) {
                         this.#gestionarAcierto();
 
