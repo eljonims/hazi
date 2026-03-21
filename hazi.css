@@ -1,4 +1,4 @@
-html { 
+html {
     overflow: hidden;
     /* Evita que el scroll "baile" en la raíz */
     width: 100vw;
