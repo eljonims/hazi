@@ -1,0 +1,115 @@
+{
+  "archivo": "eu-denbora-unitateak.json",
+  "id": "eu-unit",
+  "titulo": "Denbora-unitateak",
+  "lex": [
+    {
+      "k": "segundo",
+      "ref": "",
+      "r": 1,
+      "def": "segundo",
+      "img": [],
+      "snd": [],
+      "e": ["iz.", "neur.", "batua"]
+    },
+    {
+      "k": "minutu",
+      "ref": "",
+      "r": 1,
+      "def": "minuto",
+      "img": [],
+      "snd": [],
+      "e": ["iz.", "neur.", "batua"]
+    },
+    {
+      "k": "ordu",
+      "ref": "",
+      "r": 1,
+      "def": "hora",
+      "img": [],
+      "snd": [],
+      "e": ["iz.", "egut.", "batua"]
+    },
+    {
+      "k": "egun",
+      "ref": "",
+      "r": 1,
+      "def": "día",
+      "img": [],
+      "snd": [],
+      "e": ["iz.", "egut.", "batua"]
+    },
+    {
+      "k": "aste",
+      "ref": "",
+      "r": 1,
+      "def": "semana",
+      "img": [],
+      "snd": [],
+      "e": ["iz.", "egut.", "batua"]
+    },
+    {
+      "k": "hilabete",
+      "ref": "",
+      "r": 1,
+      "def": "mes",
+      "img": [],
+      "snd": [],
+      "e": ["iz.", "egut.", "batua"]
+    },
+    {
+      "k": "urte",
+      "ref": "",
+      "r": 1,
+      "def": "año",
+      "img": [],
+      "snd": [],
+      "e": ["iz.", "egut.", "batua"]
+    },
+    {
+      "k": "hamarkada",
+      "ref": "",
+      "r": 2,
+      "def": "década",
+      "img": [],
+      "snd": [],
+      "e": ["iz.", "egut.", "batua"]
+    },
+    {
+      "k": "mende",
+      "ref": "",
+      "r": 2,
+      "def": "siglo",
+      "img": [],
+      "snd": [],
+      "e": ["iz.", "egut.", "batua"]
+    },
+    {
+      "k": "milurteko",
+      "ref": "",
+      "r": 2,
+      "def": "milenio",
+      "img": [],
+      "snd": [],
+      "e": ["iz.", "egut.", "batua"]
+    },
+    {
+      "k": "lustro",
+      "ref": "",
+      "r": 3,
+      "def": "lustro",
+      "img": [],
+      "snd": [],
+      "e": ["iz.", "egut.", "batua"]
+    },
+    {
+      "k": "aro",
+      "ref": "",
+      "r": 3,
+      "def": "era / época",
+      "img": [],
+      "snd": [],
+      "e": ["iz.", "egut.", "batua"]
+    }
+  ]
+}

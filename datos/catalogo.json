@@ -1,3 +1,27 @@
-[
-  { "id": "eu-gorputza", "titulo": "Familia" }
-]
+{
+  "biblioteca": {
+    "eu-gorputza": {"archivo":"eu-gorputza.json", "titulo": "gorputza" ,"icono": "🧍"},
+    "eu-egun": { "archivo": "eu-egunak.json", "titulo": "Días de la semana" },
+    "eu-hila": { "archivo": "eu-hilabeteak.json", "titulo": "Meses del año" ,"icono": "📅"},
+    "eu-urta": {"archivo": "eu-urtaroak.json", "titulo": "estaciones del año", "icono":"🍂"},
+    "eu-puntu": { "archivo": "eu-eguneko-puntuak.json", "titulo": "momentos del día" , "icono":"☀️"},
+    "eu-unit": { "archivo": "eu-denbora-unitateak.json", "titulo": "unidades de tiempo", "icono": "⏳" }
+
+
+  },
+  "arbol": [
+    {
+      "id": "+egutegia",
+      "titulo": "Egutegia eta denbora",
+      "icono": "📅",
+      "hijos": [
+        { "id": "eu-egun" },
+        { "id": "eu-hila" },
+        { "id": "eu-urta" },
+        { "id": "eu-puntu" },
+        { "id": "eu-unit" }
+      ]
+    },
+    {"id": "eu-gorputza" }
+  ]
+}

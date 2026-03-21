@@ -334,7 +334,7 @@ body {
     align-items: center;
     justify-content: space-between;
 
-    min-height: 15%;
+    min-height: 60px;
     padding: 0 25px;
     background: #1a1a1a;
     border: 2px solid #333;

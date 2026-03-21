@@ -1,0 +1,93 @@
+{
+        "fichero": "eu-eguneko-puntuak.json",
+        "id": "eu-puntu",
+        "titulo": "Eguneko tarteak",
+        "lex": [
+                {
+                        "k": "egunsanti",
+                        "ref": "",
+                        "r": 3,
+                        "def": "alba / amanecer",
+                        "img": [],
+                        "snd": [],
+                        "e": [
+                                "iz.",
+                                "batua"
+                        ]
+                },
+                {
+                        "k": "goiz",
+                        "ref": "",
+                        "r": 1,
+                        "def": "mañana",
+                        "img": [],
+                        "snd": [],
+                        "e": [
+                                "iz.",
+                                "adb.",
+                                "batua"
+                        ]
+                },
+                {
+                        "k": "eguerdi",
+                        "ref": "",
+                        "r": 1,
+                        "def": "mediodía",
+                        "img": [],
+                        "snd": [],
+                        "e": [
+                                "iz.",
+                                "batua"
+                        ]
+                },
+                {
+                        "k": "arratsalde",
+                        "ref": "",
+                        "r": 1,
+                        "def": "tarde",
+                        "img": [],
+                        "snd": [],
+                        "e": [
+                                "iz.",
+                                "batua"
+                        ]
+                },
+                {
+                        "k": "ilunabar",
+                        "ref": "",
+                        "r": 2,
+                        "def": "atardecer / anochecer",
+                        "img": [],
+                        "snd": [],
+                        "e": [
+                                "iz.",
+                                "batua"
+                        ]
+                },
+                {
+                        "k": "gau",
+                        "ref": "",
+                        "r": 1,
+                        "def": "noche",
+                        "img": [],
+                        "snd": [],
+                        "e": [
+                                "iz.",
+                                "adb.",
+                                "batua"
+                        ]
+                },
+                {
+                        "k": "gauerdia",
+                        "ref": "",
+                        "r": 2,
+                        "def": "medianoche",
+                        "img": [],
+                        "snd": [],
+                        "e": [
+                                "iz.",
+                                "batua"
+                        ]
+                }
+        ]
+}

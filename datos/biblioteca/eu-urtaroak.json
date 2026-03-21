@@ -1,0 +1,43 @@
+{
+  "fichero": "eu-urtaroak.json",
+  "id": "eu-urta",
+  "titulo": "Urtaroak",
+  "lex": [
+    {
+      "k": "udaberri",
+      "ref": "",
+      "r": 1,
+      "def": "primavera",
+      "img": [],
+      "snd": [],
+      "e": ["iz.", "egut.", "batua"]
+    },
+    {
+      "k": "uda",
+      "ref": "",
+      "r": 1,
+      "def": "verano",
+      "img": [],
+      "snd": [],
+      "e": ["iz.", "egut.", "batua"]
+    },
+    {
+      "k": "udazken",
+      "ref": "",
+      "r": 1,
+      "def": "otoño",
+      "img": [],
+      "snd": [],
+      "e": ["iz.", "egut.", "batua"]
+    },
+    {
+      "k": "negu",
+      "ref": "",
+      "r": 1,
+      "def": "invierno",
+      "img": [],
+      "snd": [],
+      "e": ["iz.", "egut.", "batua"]
+    }
+  ]
+}

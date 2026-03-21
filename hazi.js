@@ -61,6 +61,56 @@ class Hazi {
                                         this.#frenarRuleta();
                                         break;
                                 }
+                                case "cambiar-check":{
+                                        console.log("cambiar-check")
+                                        evento.preventDefault();
+                                        if(target.indeterminate){
+                                                target.checked = true;
+                                                target.indeterminate = false;
+                                        }else{
+                                                target.checked = !target.checked;
+                                        }
+                                        const container = target.closest('details');
+                                        // propagar hacia abaj o
+                                        if(container){
+                                                const descendants = container.querySelectorAll('[data-action="cambiar-check"]');
+                                                descendants.forEach(child=>{
+                                                        child.checked = target.checked;
+                                                        child.indeterminate = false;
+                                                });
+                                        }
+                        
+                                        const propagarHaciaArriba = (elem)=>{
+                                                const detailsActual = elem.closest('details');
+                                                if(!detailsActual) return;
+
+                                                const detailsPadre = detailsActual.parentElement.closest('details');
+                                                if(!detailsPadre) return;
+
+                                                const checkPadre = detailsPadre.querySelector(':scope > summary [data-action="cambiar-check"]');
+                                                if(!checkPadre) return;
+
+                                                const hijos = Array.from(detailsPadre.querySelectorAll(':scope > .content [data-action="cambiar-check"], :scope > details > summary [data-action="cambiar-check"]'));
+
+                                                const marcados = hijos.filter(h=>h.checked).lentgth;
+                                                const hayGrises = hijos.some(h=>h.indeterminate);
+                                                const total = hijos.length;
+
+                                                if(marcados == total){
+                                                        checkPadre.checked = true;
+                                                        checkPadre.indeterminate = false;
+                                                } else if(marcados === 0 && !hayGrises){
+                                                        checkPadre.checked = false;
+                                                        checkPadre.indeterminate = false;
+                                                } else {
+                                                        checkPadre.checked = false;
+                                                        checkPadre.indeterminate = true;
+                                                }
+                                                propagarHaciaArriba(checkPadre);
+                                        };
+                                        propagarHaciaArriba(target);
+                                        break;
+                                }
 
                                 default:
                                         console.warn(`data-action="${action}" no contemplado en la delegación`)
@@ -121,6 +171,7 @@ class Hazi {
                         this.bitacora(`${this.t('recuperando-perfil')} ...`, 40);
                         const [guardado] = await Promise.all([this.#recuperar("ajustes", "perfil"), this.#esperar(300)]);
                         this.perfil = guardado ?? structuredClone(Hazi.#PERFIL_POR_DEFECTO);
+                        this.perfil.estado.ultimaConexion = Date.now();
 
 
                         this.bitacora(`${this.t('descargando-catalogo')} ...`, 50);
@@ -168,26 +219,25 @@ class Hazi {
 
         mostrarConfiguracionPartida() {
 
-                this.perfil.partida.temas.clear();
-                this.nivel = 1;
+                //this.perfil.partida.temas.clear();
 
                 const cuerpo = document.getElementById('capa-principal');
-                cuerpo.className="";
+                cuerpo.className = "";
                 cuerpo.innerHTML = "";
                 const titulo = '<div class="titulo-app">Hazi</div>';
                 const menu = '<div class="menu" data-action="abrir-menu">☰</div>'
                 const comenzar = `<button class="comenzar" data-action="comenzar-partida">${this.t('btn-comenzar')}</button>`;
                 const dificultades = `
                         <div class="dificultad">
-                                <button class="nivel ${this.nivel == 1 ? "seleccionado" : ""}" data-action="cambiar-dificultad" data-id="1">
+                                <button class="nivel ${this.perfil.partida.dificultad == 1 ? "seleccionado" : ""}" data-action="cambiar-dificultad" data-id="1">
                                         <span class="icono">🌱</span>
                                         <span class="texto">${this.t('nvl-1')}</span>
                                 </button>
-                                <button class="nivel ${this.nivel == 2 ? "seleccionado" : ""}" data-action="cambiar-dificultad" data-id="2">
+                                <button class="nivel ${this.perfil.partida.dificultad == 2 ? "seleccionado" : ""}" data-action="cambiar-dificultad" data-id="2">
                                         <span class="icono">🌿</span>
                                         <span class="texto">${this.t('nvl-2')}</span>
                                 </button>
-                                <button class="nivel ${this.nivel == 3 ? "seleccionado" : ""}" data-action="cambiar-dificultad" data-id="3">
+                                <button class="nivel ${this.perfil.partida.dificultad == 3 ? "seleccionado" : ""}" data-action="cambiar-dificultad" data-id="3">
                                         <span class="icono">🌳</span>
                                         <span class="texto">${this.t('nvl-3')}</span>
                                 </button>
@@ -195,15 +245,48 @@ class Hazi {
                 `;
 
                 let temario = '<div class="temario">';
-                this.catalogo.forEach(tema => {
+                const arbol = this.catalogo.arbol;
+                const biblio = this.catalogo.biblioteca;
+                const construyeNivel = (arrayNodos) => {
+                        let result = "";
+                        arrayNodos.forEach(nodo=>{
+                                if(nodo.hijos && nodo.hijos.length > 0){
+                                        result += `<details class="grupo"><summary>
+                                        <input type="checkbox" data-action="cambiar-check">${nodo.titulo}</summary>`
+                                        result += construyeNivel(nodo.hijos)
+                                        result += '</details>';
+                                }
+                                else {
+                                        const seleccionar = this.perfil.partida.temas.has(nodo.id);
+                                        result += `
+                                        <div class="tema ${seleccionar ? "seleccionado" : ""}"
+                                                data-action="seleccionar-tema" data-id="${nodo.id}">
+                                                <span class="titulo">${biblio[nodo.id].titulo}</span>
+                                                <span class="icono">${biblio[nodo.id].icono?biblio[nodo.id].icono:"🌱"}</span>
+                                        </div>
+                                        `;
+                                         if(seleccionar)this.perfil.partida.temas.add(nodo.id);
+                                }
+                        });
+                        return result;
+                };
+                const construyeArbol = () =>{
+                       temario += construyeNivel(arbol) ;
+                       temario += '</div>';
+                };
+                construyeArbol();
+                /*
+                arbol.forEach(tema => {
                         temario += `
-                        <div    class="tema seleccionado"  data-action="seleccionar-tema" data-id="${tema.id}">
+                        <div    class="tema ${this.perfil.partida.temas.has(tema.id) ? "seleccionado" : ""}"  
+                                        data-action="seleccionar-tema" data-id="${tema.id}">
                                 <span class="titulo">${tema.titulo}</span>
                                 <span class="icono">🌱</span>
                         </div>`;
                         this.perfil.partida.temas.add(tema.id);
                 });
                 temario += '</div>';
+                */
                 cuerpo.innerHTML = titulo + menu + temario + dificultades + comenzar;
 
 
@@ -211,8 +294,8 @@ class Hazi {
         async descargarTemas() {
                 try {
                         const promesas = [...this.temas].map(id => {
-                                return fetch(`datos/temas/${id}.json`).then(res => {
-                                        if (!res.ok) throw new Error(`No existe el archivo: ./datos/temas/${id}.json`);
+                                return fetch(`datos/biblioteca/${id}.json`).then(res => {
+                                        if (!res.ok) throw new Error(`No existe el archivo: ./datos/biblioteca/${id}.json`);
                                         return res.json();
                                 });
                         });
@@ -221,10 +304,51 @@ class Hazi {
                         lista.forEach(json => {
                                 this.vocabulario.push(...json.vocabulario);// reune todo el vocabulario seleccionado
                         });
+                        this.#guardarVocabularioEnBD(lista);
                 } catch (error) {
 
                 }
         }
+        async #guardarVocabularioEnBD(lista) {
+                return new Promise((resolve, reject) => {
+                        const transaccion = this.bd.transaction(["lexico"], "readwrite");
+                        const store = transaccion.objectStore("lexico");
+
+                        lista.forEach(json => {
+                                json.vocabulario.forEach(palabra => {
+                                        const idUnico = `${json.id}_${palabra.k}`;
+
+                                        const peticion = store.add({
+                                                id: idUnico,
+                                                lema: palabra.k,
+                                                acep: palabra.def,
+                                                cat: json.id, //índice "por_catalogo"
+                                                stats: {
+                                                        maes: 0,
+                                                        date: Date.now(),
+                                                        vistas: 0,
+                                                        dist: [], //distractores con los que se confunde
+                                                }
+                                        });
+
+                                        peticion.onerror = (e) => {
+                                                if (e.target.error.name === "ConstraintError") {//error de duplicidad
+                                                        e.preventDefault(); // Evita que la transacción se detenga
+                                                        e.stopPropagation(); // Evita que el error suba a la transacción
+                                                }
+                                        };
+                                });
+                        });
+
+                        transaccion.oncomplete = () => {
+                                console.log("Vocabulario sincronizado con éxito.");
+                                resolve();
+                        };
+
+                        transaccion.onerror = () => reject("Error crítico en la base de datos.");
+                });
+        }
+
         crearUrlDeImagenWiki(imgPath, width = 300) {
                 if (!imgPath) return "";
 
@@ -247,6 +371,7 @@ class Hazi {
                 return ` <img src="${url}" alt="${item.k}" loading="eager" title="${item.k}">`;
         }
         async comenzarPartida() {
+                this.perfil.estado.totalPartidas++;
                 await this.#guardar("ajustes", this.perfil);
                 this.rt = {
                         dificultad: this.perfil.partida.dificultad,
@@ -448,7 +573,7 @@ class Hazi {
         #finalizarPartida() {
                 this.#generarResumen();
         }
-        #generarResumen() { 
+        #generarResumen() {
                 this.mostrarConfiguracionPartida();
         }
         #esperar(ms) {
@@ -463,15 +588,25 @@ class Hazi {
                         peticion.onupgradeneeded = (e) => {
                                 const bd = e.target.result;
 
-                                if (!bd.objectStoreNames.contains("records")) {
-                                        bd.createObjectStore("records", { keyPath: "id" });
-                                }
-                                if (!bd.objectStoreNames.contains("lexico")) {
-                                        bd.createObjectStore("lexico", { keyPath: "id" });
-                                }
-                                if (!bd.objectStoreNames.contains("ajustes")) {
-                                        bd.createObjectStore("ajustes", { keyPath: "id" });
-                                }
+                                ["records", "lexico", "ajustes"].forEach(s => {
+                                        if (!bd.objectStoreNames.contains(s))
+                                                bd.createObjectStore(s, { keyPath: "id" });
+                                });
+
+                                const storeLexico = e.target.transaction.objectStore("lexico");
+                                [
+                                        { name: "por_catalogo", path: "cat", multi: true },
+                                        { name: "por_maestria", path: "stats.maes", multi: false },
+                                        { name: "por_ultimo_acceso", path: "stats.date", multi: false },
+                                        { name: "por_rareza", path: "raro", multi: false },
+                                        { name: "por_etiqueta", path: "etiq", multi: true },
+                                ].forEach(i => {
+                                        if (!storeLexico.indexNames.contains(i.name))
+                                                storeLexico.createIndex(i.name, i.path, { unique: false, multiEntry: i.multi });
+
+                                });
+
+
                         };
 
                         peticion.onsuccess = (e) => {
@@ -520,6 +655,43 @@ class Hazi {
                         tx.onerror = () => rechazar(`Error al borrar ${id} en ${almacen}`);
                 });
         }
+        #prepararCatalogo() {
+                const idsEnArbol = new Set();
+                const idsInaccesibles = new Set();
+
+                // detecta y registra los ids de temas que aparecen en el arbol, ve si también existen en
+                // la biblioteca.
+                const escanearNivel = (lista) => {
+                        lista.forEach(nodo => {
+                                if (nodo.hijos){
+                                         escanearNivel(nodo.hijos);
+                                } else {
+                                        if(!this.catalogo.biblioteca[nodo.id]){
+                                                idsInaccesibles.add(nodo.id);
+                                        } else {
+                                                idsEnArbol.add(nodo.id);
+                                        }
+                                         
+                                }
+                        });
+                };
+                escanearNivel(this.catalogo.arbol);
+                if (idsInaccesibles.size > 0) 
+                        console.error("Temas en árbol que NO existen en biblioteca:", [...idsInexistentes]);
+                // buscar temas "huérfanos" (están en biblioteca pero no en árbol)
+                const huerfanos = Object.keys(this.biblioteca).filter(id => !idsEnArbol.has(id));
+
+                // Si hay huérfanos, van al Supertema "+ Otros"
+                if (huerfanos.length > 0) {
+                        this.arbol.push({
+                                id: "+otros",
+                                titulo: "Otros temas",
+                                 icono: "📦",
+                                hijos: huerfanos.map(id => ({ id })) // Solo el ID, el título se sacará de la biblioteca
+                        });
+                }
+        }
+
 }
 
 

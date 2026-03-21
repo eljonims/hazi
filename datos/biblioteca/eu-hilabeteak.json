@@ -1,0 +1,115 @@
+{
+  "fichero": "eu-hilabeteak.json",
+  "id": "eu-hila",
+  "titulo": "Urteko Hilabeteak",
+  "lex": [
+    {
+      "k": "urtarril",
+      "ref": "",
+      "r": 1,
+      "def": "enero",
+      "img": [],
+      "snd": [],
+      "e": ["iz.", "egut.", "batua"]
+    },
+    {
+      "k": "otsail",
+      "ref": "",
+      "r": 1,
+      "def": "febrero",
+      "img": [],
+      "snd": [],
+      "e": ["iz.", "egut.", "batua"]
+    },
+    {
+      "k": "martxo",
+      "ref": "",
+      "r": 1,
+      "def": "marzo",
+      "img": [],
+      "snd": [],
+      "e": ["iz.", "egut.", "batua"]
+    },
+    {
+      "k": "apiril",
+      "ref": "",
+      "r": 1,
+      "def": "abril",
+      "img": [],
+      "snd": [],
+      "e": ["iz.", "egut.", "batua"]
+    },
+    {
+      "k": "maiatz",
+      "ref": "",
+      "r": 1,
+      "def": "mayo",
+      "img": [],
+      "snd": [],
+      "e": ["iz.", "egut.", "batua"]
+    },
+    {
+      "k": "ekain",
+      "ref": "",
+      "r": 1,
+      "def": "junio",
+      "img": [],
+      "snd": [],
+      "e": ["iz.", "egut.", "batua"]
+    },
+    {
+      "k": "uztail",
+      "ref": "",
+      "r": 1,
+      "def": "julio",
+      "img": [],
+      "snd": [],
+      "e": ["iz.", "egut.", "batua"]
+    },
+    {
+      "k": "abuztu",
+      "ref": "",
+      "r": 1,
+      "def": "agosto",
+      "img": [],
+      "snd": [],
+      "e": ["iz.", "egut.", "batua"]
+    },
+    {
+      "k": "irail",
+      "ref": "",
+      "r": 1,
+      "def": "septiembre",
+      "img": [],
+      "snd": [],
+      "e": ["iz.", "egut.", "batua"]
+    },
+    {
+      "k": "urri",
+      "ref": "",
+      "r": 1,
+      "def": "octubre",
+      "img": [],
+      "snd": [],
+      "e": ["iz.", "egut.", "batua"]
+    },
+    {
+      "k": "azaro",
+      "ref": "",
+      "r": 1,
+      "def": "noviembre",
+      "img": [],
+      "snd": [],
+      "e": ["iz.", "egut.", "batua"]
+    },
+    {
+      "k": "abendu",
+      "ref": "",
+      "r": 1,
+      "def": "diciembre",
+      "img": [],
+      "snd": [],
+      "e": ["iz.", "egut.", "batua"]
+    }
+  ]
+}

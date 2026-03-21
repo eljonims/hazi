@@ -1,0 +1,98 @@
+{
+        "archivo": "eu-egunak.json",
+        "id": "eu-egun",
+        "titulo": "Asteko Egunak",
+        "lex": [
+                {
+                        "k": "astelehen",
+                        "ref": "",
+                        "r": 1,
+                        "def": "lunes",
+                        "img": ["datos/img/lunes.webp"],
+                        "snd": [],
+                        "e": [
+                                "iz.",
+                                "egut.",
+                                "batua"
+                        ]
+                },
+                {
+                        "k": "astearte",
+                        "ref": "",
+                        "r": 1,
+                        "def": "martes",
+                        "img": ["datos/img/martes.webp"],
+                        "snd": [],
+                        "e": [
+                                "iz.",
+                                "egut.",
+                                "batua"
+                        ]
+                },
+                {
+                        "k": "asteazken",
+                        "ref": "",
+                        "r": 1,
+                        "def": "miércoles",
+                        "img": ["datos/img/miercoles.webp"],
+                        "snd": [],
+                        "e": [
+                                "iz.",
+                                "egut.",
+                                "batua"
+                        ]
+                },
+                {
+                        "k": "ostegun",
+                        "ref": "",
+                        "r": 1,
+                        "def": "jueves",
+                        "img": ["datos/img/jueves.webp"],
+                        "snd": [],
+                        "e": [
+                                "iz.",
+                                "egut.",
+                                "batua"
+                        ]
+                },
+                {
+                        "k": "ostiral",
+                        "ref": "",
+                        "r": 1,
+                        "def": "viernes",
+                        "img": ["datos/img/viernes.webp"],
+                        "snd": [],
+                        "e": [
+                                "iz.",
+                                "egut.",
+                                "batua"
+                        ]
+                },
+                {
+                        "k": "larunbat",
+                        "ref": "",
+                        "r": 1,
+                        "def": "sábado",
+                        "img": ["datos/img/sabado.webp"],
+                        "snd": [],
+                        "e": [
+                                "iz.",
+                                "egut.",
+                                "batua"
+                        ]
+                },
+                {
+                        "k": "igande",
+                        "ref": "",
+                        "r": 1,
+                        "def": "domingo",
+                        "img": ["datos/img/domingo.webp"],
+                        "snd": [],
+                        "e": [
+                                "iz.",
+                                "egut.",
+                                "batua"
+                        ]
+                }
+        ]
+}
