@@ -1,4 +1,5 @@
 class Hazi {
+        static VERSION = "1.0.0";
         static #PERFIL_POR_DEFECTO = {
                 id: "perfil",
                 usuario: { nombre: "invitado" },
@@ -7,8 +8,8 @@ class Hazi {
                         modoRespuesta: "txt", temas: new Set()
                 },
                 interfaz: { idioma: "es", sonido: true },
-                estado: { tutorialVisto: false, totalPartidas: 0, ultimaConexion: Date.now(), versionApp: "1.0.0" }
-        }
+                estado: { tutorialVisto: false, totalPartidas: 0, ultimaConexion: Date.now(), versionApp: Hazi.VERSION }
+        };
         constructor() {
                 this.bla = { // desvincula el texto literal en el html. se recupera con el método this.t(clave) 
                         'Iniciando-app': "iniciando sistema.",
@@ -25,11 +26,110 @@ class Hazi {
                         'btn-comenzar': 'comenzar',
                         'recuperando-perfil': 'recuperando perfil',
                 };
-                this.perfil = null;
-                this.rt = null;
+
+                this.perfil = null; //se guarda y se recupera
+                this.rt = null; //runtime, datos volátiles de ejecución
 
                 this.bd = null;
 
+        }
+        async iniciarApp(urlCatalogo) {
+
+                const esperar = (ms) => new Promise(res => setTimeout(res, ms));
+                const abrirBD = () => {
+                        return new Promise((resolver, rechazar) => {
+                                // Abrimos la base de datos (Versión 1)
+                                const peticion = indexedDB.open("hazi_DB", 1);
+
+                                // Solo ocurre la primera vez: Definimos el diseño de los compartimentos
+                                peticion.onupgradeneeded = (e) => {
+                                        const bd = e.target.result;
+
+                                        ["records", "lexico", "ajustes"].forEach(s => {
+                                                if (!bd.objectStoreNames.contains(s))
+                                                        bd.createObjectStore(s, { keyPath: "id" });
+                                        });
+
+                                        const storeLexico = e.target.transaction.objectStore("lexico");
+                                        [
+                                                { name: "por_catalogo", path: "cat", multi: true },
+                                                { name: "por_maestria", path: "stats.maes", multi: false },
+                                                { name: "por_ultimo_acceso", path: "stats.date", multi: false },
+                                                { name: "por_rareza", path: "raro", multi: false },
+                                                { name: "por_etiqueta", path: "etiq", multi: true },
+                                        ].forEach(i => {
+                                                if (!storeLexico.indexNames.contains(i.name))
+                                                        storeLexico.createIndex(i.name, i.path, { unique: false, multiEntry: i.multi });
+
+                                        });
+
+
+                                };
+
+                                peticion.onsuccess = (e) => {
+                                        resolver(e.target.result);
+                                };
+
+                                peticion.onerror = () => rechazar(`${this.t('critico')}: ${this.t("error-bd")}`);
+                        });
+                };
+                // 1. Iniciamos la bitácora con el nombre del motor
+                this.bitacora(`<b>Hazi</b>: ${this.t('Iniciando-app')}`, 10);
+                await esperar(150);
+                try {
+                        // -A: tareas de inicio
+
+                        this.bitacora(`${this.t('abriendo-bd')} ...`, 30);
+                        const [bd] = await Promise.all([abrirBD(), esperar(300)]);
+                        this.bd = bd;
+
+                        this.bitacora(`${this.t('recuperando-perfil')} ...`, 40);
+                        const [guardado] = await Promise.all([this.#recuperar("ajustes", "perfil"), esperar(300)]);
+                        this.perfil = guardado ?? structuredClone(Hazi.#PERFIL_POR_DEFECTO);
+                        this.perfil.estado.ultimaConexion = Date.now();
+
+
+                        this.bitacora(`${this.t('descargando-catalogo')} ...`, 50);
+                        const [respuesta] = await Promise.all([fetch(urlCatalogo), esperar(300)]);
+                        if (!respuesta.ok) throw new Error(`${this.t('critico')}: ${this.t('error-catalogo')}`);
+                        this.catalogo = await respuesta.json();
+
+
+                        // -B: llenado de barra y mensaje listo
+
+                        this.bitacora(`${this.t('carga-finalizada')}`, 100);
+                        await esperar(500);
+
+                        // -C: transición de desvanecimiento de la capa de carga hacia la app
+
+                        const bitacora = document.getElementById('capa-bitacora');
+                        const principal = document.getElementById('capa-principal');
+
+                        const transicionar = (e) => {
+                                if (!bitacora.parentNode || !e.target === e.currentTarget) return;
+                                bitacora.remove();
+                                principal.classList.remove('oculto');
+                                this.establecerEventos();
+                                this.mostrarConfiguracionPartida();
+
+                        };
+                        bitacora.addEventListener('transitionend', transicionar, { once: true });
+                        bitacora.style.opacity = 0; //dispara la transición
+
+                        const tiempoMaximoDeTransicion = () => {
+                                const estilos = window.getComputedStyle(bitacora);
+                                const duraciones = estilos.transitionDuration.split(',').map(s => parseFloat(s) * 1000);
+                                const delays = estilos.transitionDelay.split(',').map(s => parseFloat(s) * 1000);
+                                const tiemposTotales = duraciones.map((dur, i) => dur + (delays[i] || 0));
+
+                                return Math.max(...tiemposTotales);
+                        };
+                        setTimeout(transicionar, tiempoMaximoDeTransicion() + 100); //seguro por si el css no tiene transición
+
+
+                } catch (error) {
+                        this.bitacora(`${this.t('critico')}: ${error.message || error}`, 100);
+                }
         }
         t(clave) {
                 return this.bla[clave] || clave;
@@ -61,45 +161,45 @@ class Hazi {
                                         this.#frenarRuleta();
                                         break;
                                 }
-                                case "cambiar-check":{
+                                case "cambiar-check": {
                                         console.log("cambiar-check")
                                         evento.preventDefault();
-                                        if(target.indeterminate){
+                                        if (target.indeterminate) {
                                                 target.checked = true;
                                                 target.indeterminate = false;
-                                        }else{
+                                        } else {
                                                 target.checked = !target.checked;
                                         }
                                         const container = target.closest('details');
                                         // propagar hacia abaj o
-                                        if(container){
+                                        if (container) {
                                                 const descendants = container.querySelectorAll('[data-action="cambiar-check"]');
-                                                descendants.forEach(child=>{
+                                                descendants.forEach(child => {
                                                         child.checked = target.checked;
                                                         child.indeterminate = false;
                                                 });
                                         }
-                        
-                                        const propagarHaciaArriba = (elem)=>{
+
+                                        const propagarHaciaArriba = (elem) => {
                                                 const detailsActual = elem.closest('details');
-                                                if(!detailsActual) return;
+                                                if (!detailsActual) return;
 
                                                 const detailsPadre = detailsActual.parentElement.closest('details');
-                                                if(!detailsPadre) return;
+                                                if (!detailsPadre) return;
 
                                                 const checkPadre = detailsPadre.querySelector(':scope > summary [data-action="cambiar-check"]');
-                                                if(!checkPadre) return;
+                                                if (!checkPadre) return;
 
                                                 const hijos = Array.from(detailsPadre.querySelectorAll(':scope > .content [data-action="cambiar-check"], :scope > details > summary [data-action="cambiar-check"]'));
 
-                                                const marcados = hijos.filter(h=>h.checked).lentgth;
-                                                const hayGrises = hijos.some(h=>h.indeterminate);
+                                                const marcados = hijos.filter(h => h.checked).lentgth;
+                                                const hayGrises = hijos.some(h => h.indeterminate);
                                                 const total = hijos.length;
 
-                                                if(marcados == total){
+                                                if (marcados == total) {
                                                         checkPadre.checked = true;
                                                         checkPadre.indeterminate = false;
-                                                } else if(marcados === 0 && !hayGrises){
+                                                } else if (marcados === 0 && !hayGrises) {
                                                         checkPadre.checked = false;
                                                         checkPadre.indeterminate = false;
                                                 } else {
@@ -157,66 +257,6 @@ class Hazi {
                 }
                 if (barra && porcentaje !== undefined) barra.style.width = `${porcentaje}%`;
         }
-
-        async iniciarApp(urlCatalogo) {
-                // 1. Iniciamos la bitácora con el nombre del motor
-                this.bitacora(`<b>Hazi</b>: ${this.t('Iniciando-app')}`, 10);
-                await this.#esperar(150);
-                try {
-                        // -A: tareas de inicio
-
-                        this.bitacora(`${this.t('abriendo-bd')} ...`, 30);
-                        await Promise.all([this.#abrirBaseDatos(), this.#esperar(300)]);
-
-                        this.bitacora(`${this.t('recuperando-perfil')} ...`, 40);
-                        const [guardado] = await Promise.all([this.#recuperar("ajustes", "perfil"), this.#esperar(300)]);
-                        this.perfil = guardado ?? structuredClone(Hazi.#PERFIL_POR_DEFECTO);
-                        this.perfil.estado.ultimaConexion = Date.now();
-
-
-                        this.bitacora(`${this.t('descargando-catalogo')} ...`, 50);
-                        const [respuesta] = await Promise.all([fetch(urlCatalogo), this.#esperar(300)]);
-                        if (!respuesta.ok) throw new Error(`${this.t('critico')}: ${this.t('error-catalogo')}`);
-                        this.catalogo = await respuesta.json();
-
-
-                        // -B: llenado de barra y mensaje listo
-
-                        this.bitacora(`${this.t('carga-finalizada')}`, 100);
-                        await this.#esperar(500);
-
-                        // -C: transición de desvanecimiento de la capa de carga hacia la app
-
-                        const bitacora = document.getElementById('capa-bitacora');
-                        const principal = document.getElementById('capa-principal');
-
-                        const transicionar = (e) => {
-                                if (!bitacora.parentNode || !e.target === e.currentTarget) return;
-                                bitacora.remove();
-                                principal.classList.remove('oculto');
-                                this.establecerEventos();
-                                this.mostrarConfiguracionPartida();
-
-                        };
-                        bitacora.addEventListener('transitionend', transicionar, { once: true });
-                        bitacora.style.opacity = 0; //dispara la transición
-
-                        const tiempoMaximoDeTransicion = () => {
-                                const estilos = window.getComputedStyle(bitacora);
-                                const duraciones = estilos.transitionDuration.split(',').map(s => parseFloat(s) * 1000);
-                                const delays = estilos.transitionDelay.split(',').map(s => parseFloat(s) * 1000);
-                                const tiemposTotales = duraciones.map((dur, i) => dur + (delays[i] || 0));
-
-                                return Math.max(...tiemposTotales);
-                        };
-                        setTimeout(transicionar, tiempoMaximoDeTransicion() + 100); //seguro por si el css no tiene transición
-
-
-                } catch (error) {
-                        this.bitacora(`${this.t('critico')}: ${error.message || error}`, 100);
-                }
-        }
-
         mostrarConfiguracionPartida() {
 
                 //this.perfil.partida.temas.clear();
@@ -249,8 +289,8 @@ class Hazi {
                 const biblio = this.catalogo.biblioteca;
                 const construyeNivel = (arrayNodos) => {
                         let result = "";
-                        arrayNodos.forEach(nodo=>{
-                                if(nodo.hijos && nodo.hijos.length > 0){
+                        arrayNodos.forEach(nodo => {
+                                if (nodo.hijos && nodo.hijos.length > 0) {
                                         result += `<details class="grupo"><summary>
                                         <input type="checkbox" data-action="cambiar-check">${nodo.titulo}</summary>`
                                         result += construyeNivel(nodo.hijos)
@@ -262,17 +302,17 @@ class Hazi {
                                         <div class="tema ${seleccionar ? "seleccionado" : ""}"
                                                 data-action="seleccionar-tema" data-id="${nodo.id}">
                                                 <span class="titulo">${biblio[nodo.id].titulo}</span>
-                                                <span class="icono">${biblio[nodo.id].icono?biblio[nodo.id].icono:"🌱"}</span>
+                                                <span class="icono">${biblio[nodo.id].icono ? biblio[nodo.id].icono : "🌱"}</span>
                                         </div>
                                         `;
-                                         if(seleccionar)this.perfil.partida.temas.add(nodo.id);
+                                        if (seleccionar) this.perfil.partida.temas.add(nodo.id);
                                 }
                         });
                         return result;
                 };
-                const construyeArbol = () =>{
-                       temario += construyeNivel(arbol) ;
-                       temario += '</div>';
+                const construyeArbol = () => {
+                        temario += construyeNivel(arbol);
+                        temario += '</div>';
                 };
                 construyeArbol();
                 /*
@@ -576,47 +616,6 @@ class Hazi {
         #generarResumen() {
                 this.mostrarConfiguracionPartida();
         }
-        #esperar(ms) {
-                return new Promise(res => setTimeout(res, ms));
-        }
-        #abrirBaseDatos() {
-                return new Promise((resolver, rechazar) => {
-                        // Abrimos la base de datos (Versión 1)
-                        const peticion = indexedDB.open("hazi_DB", 1);
-
-                        // Solo ocurre la primera vez: Definimos el diseño de los compartimentos
-                        peticion.onupgradeneeded = (e) => {
-                                const bd = e.target.result;
-
-                                ["records", "lexico", "ajustes"].forEach(s => {
-                                        if (!bd.objectStoreNames.contains(s))
-                                                bd.createObjectStore(s, { keyPath: "id" });
-                                });
-
-                                const storeLexico = e.target.transaction.objectStore("lexico");
-                                [
-                                        { name: "por_catalogo", path: "cat", multi: true },
-                                        { name: "por_maestria", path: "stats.maes", multi: false },
-                                        { name: "por_ultimo_acceso", path: "stats.date", multi: false },
-                                        { name: "por_rareza", path: "raro", multi: false },
-                                        { name: "por_etiqueta", path: "etiq", multi: true },
-                                ].forEach(i => {
-                                        if (!storeLexico.indexNames.contains(i.name))
-                                                storeLexico.createIndex(i.name, i.path, { unique: false, multiEntry: i.multi });
-
-                                });
-
-
-                        };
-
-                        peticion.onsuccess = (e) => {
-                                this.bd = e.target.result;
-                                resolver();
-                        };
-
-                        peticion.onerror = () => rechazar(`${this.t('critico')}: ${this.t("error-bd")}`);
-                });
-        }
         #detenerBarraTiempo() {
                 if (this.rt.temporizador) {
                         clearInterval(this.rt.temporizador);
@@ -663,20 +662,20 @@ class Hazi {
                 // la biblioteca.
                 const escanearNivel = (lista) => {
                         lista.forEach(nodo => {
-                                if (nodo.hijos){
-                                         escanearNivel(nodo.hijos);
+                                if (nodo.hijos) {
+                                        escanearNivel(nodo.hijos);
                                 } else {
-                                        if(!this.catalogo.biblioteca[nodo.id]){
+                                        if (!this.catalogo.biblioteca[nodo.id]) {
                                                 idsInaccesibles.add(nodo.id);
                                         } else {
                                                 idsEnArbol.add(nodo.id);
                                         }
-                                         
+
                                 }
                         });
                 };
                 escanearNivel(this.catalogo.arbol);
-                if (idsInaccesibles.size > 0) 
+                if (idsInaccesibles.size > 0)
                         console.error("Temas en árbol que NO existen en biblioteca:", [...idsInexistentes]);
                 // buscar temas "huérfanos" (están en biblioteca pero no en árbol)
                 const huerfanos = Object.keys(this.biblioteca).filter(id => !idsEnArbol.has(id));
@@ -686,7 +685,7 @@ class Hazi {
                         this.arbol.push({
                                 id: "+otros",
                                 titulo: "Otros temas",
-                                 icono: "📦",
+                                icono: "📦",
                                 hijos: huerfanos.map(id => ({ id })) // Solo el ID, el título se sacará de la biblioteca
                         });
                 }
