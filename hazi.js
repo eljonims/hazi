@@ -73,23 +73,35 @@ class Hazi {
                                 peticion.onerror = () => rechazar(`${this.t('critico')}: ${this.t("error-bd")}`);
                         });
                 };
+                const bitacora = (mensaje, porcentaje) => {
+                        const display = document.getElementById('bitacora-display');
+                        const barra = document.getElementById('bitacora-barra-interior');
+                        if (display) {
+                                const linea = document.createElement('div');
+                                linea.className = 'bitacora-mensaje';
+                                linea.innerHTML = `<span class="bitacora-display-prompt">&gt;</span> ${mensaje}`;
+                                display.appendChild(linea);
+                                display.scrollTop = display.scrollHeight;
+                        }
+                        if (barra && porcentaje !== undefined) barra.style.width = `${porcentaje}%`;
+                };
                 // 1. Iniciamos la bitácora con el nombre del motor
-                this.bitacora(`<b>Hazi</b>: ${this.t('Iniciando-app')}`, 10);
+                bitacora(`<b>Hazi</b>: ${this.t('Iniciando-app')}`, 10);
                 await esperar(150);
                 try {
                         // -A: tareas de inicio
 
-                        this.bitacora(`${this.t('abriendo-bd')} ...`, 30);
+                        bitacora(`${this.t('abriendo-bd')} ...`, 30);
                         const [bd] = await Promise.all([abrirBD(), esperar(300)]);
                         this.bd = bd;
 
-                        this.bitacora(`${this.t('recuperando-perfil')} ...`, 40);
+                        bitacora(`${this.t('recuperando-perfil')} ...`, 40);
                         const [guardado] = await Promise.all([this.#recuperar("ajustes", "perfil"), esperar(300)]);
                         this.perfil = guardado ?? structuredClone(Hazi.#PERFIL_POR_DEFECTO);
                         this.perfil.estado.ultimaConexion = Date.now();
 
 
-                        this.bitacora(`${this.t('descargando-catalogo')} ...`, 50);
+                        bitacora(`${this.t('descargando-catalogo')} ...`, 50);
                         const [respuesta] = await Promise.all([fetch(urlCatalogo), esperar(300)]);
                         if (!respuesta.ok) throw new Error(`${this.t('critico')}: ${this.t('error-catalogo')}`);
                         this.catalogo = await respuesta.json();
@@ -97,27 +109,27 @@ class Hazi {
 
                         // -B: llenado de barra y mensaje listo
 
-                        this.bitacora(`${this.t('carga-finalizada')}`, 100);
+                        bitacora(`${this.t('carga-finalizada')}`, 100);
                         await esperar(500);
 
                         // -C: transición de desvanecimiento de la capa de carga hacia la app
 
-                        const bitacora = document.getElementById('capa-bitacora');
+                        const bitacoraDiv = document.getElementById('capa-bitacora');
                         const principal = document.getElementById('capa-principal');
 
                         const transicionar = (e) => {
-                                if (!bitacora.parentNode || !e.target === e.currentTarget) return;
-                                bitacora.remove();
+                                if (!bitacoraDiv.parentNode || !e.target === e.currentTarget) return;
+                                bitacoraDiv.remove();
                                 principal.classList.remove('oculto');
                                 this.establecerEventos();
                                 this.mostrarConfiguracionPartida();
 
                         };
-                        bitacora.addEventListener('transitionend', transicionar, { once: true });
-                        bitacora.style.opacity = 0; //dispara la transición
+                        bitacoraDiv.addEventListener('transitionend', transicionar, { once: true });
+                        bitacoraDiv.style.opacity = 0; //dispara la transición
 
                         const tiempoMaximoDeTransicion = () => {
-                                const estilos = window.getComputedStyle(bitacora);
+                                const estilos = window.getComputedStyle(bitacoraDiv);
                                 const duraciones = estilos.transitionDuration.split(',').map(s => parseFloat(s) * 1000);
                                 const delays = estilos.transitionDelay.split(',').map(s => parseFloat(s) * 1000);
                                 const tiemposTotales = duraciones.map((dur, i) => dur + (delays[i] || 0));
@@ -244,18 +256,6 @@ class Hazi {
                         // Recargamos la pagina para ver los cambios
                         window.location.reload();
                 });
-        }
-        bitacora(mensaje, porcentaje) {
-                const display = document.getElementById('bitacora-display');
-                const barra = document.getElementById('bitacora-barra-interior');
-                if (display) {
-                        const linea = document.createElement('div');
-                        linea.className = 'bitacora-mensaje';
-                        linea.innerHTML = `<span class="bitacora-display-prompt">&gt;</span> ${mensaje}`;
-                        display.appendChild(linea);
-                        display.scrollTop = display.scrollHeight;
-                }
-                if (barra && porcentaje !== undefined) barra.style.width = `${porcentaje}%`;
         }
         mostrarConfiguracionPartida() {
 
