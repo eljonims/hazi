@@ -29,12 +29,15 @@ class Hazi {
 
                 this.perfil = null; //se guarda y se recupera
                 this.rt = null; //runtime, datos volátiles de ejecución
-
                 this.bd = null;
+                this.catalogo = null;
 
         }
         async iniciarApp(urlCatalogo) {
 
+                /*
+                        helpers
+                 */
                 const esperar = (ms) => new Promise(res => setTimeout(res, ms));
                 const abrirBD = () => {
                         return new Promise((resolver, rechazar) => {
@@ -140,7 +143,7 @@ class Hazi {
 
 
                 } catch (error) {
-                        this.bitacora(`${this.t('critico')}: ${error.message || error}`, 100);
+                        bitacora(`${this.t('critico')}: ${error.message || error}`, 100);
                 }
         }
         t(clave) {
